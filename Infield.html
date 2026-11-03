@@ -1,0 +1,1288 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>رحلة الفرع</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: mobile-first "aisle". Days are shelf tags; each day = اقرأ → العب → نفّذ في الفرع → سلّم.
+   Palette taken from the United Pharmacy logo: navy wordmark, sky blue, teal-green, orange. */
+:root{
+  --navy:#0B1F77; --blue:#00A8E8; --teal:#00A992; --orange:#F0901E;
+  --bg:#F3F6FC; --surface:#FFFFFF; --sunk:#E8EDF8; --line:#D5DCEE;
+  --fg:#0B1A4A; --muted:#56628A;
+  --primary:var(--navy); --on-primary:#FFFFFF;
+  --blue-soft:#DDF3FC; --teal-soft:#D8F3EE; --orange-soft:#FDEBD5; --navy-soft:#E3E7F6;
+  --blue-ink:#0077A8; --teal-ink:#007A69; --orange-ink:#B5620A;
+  --good:#1E8E4E; --good-soft:#DDF2E5; --bad:#C2413A; --bad-soft:#F8E0DE;
+  --logo-chip:transparent;
+  --shadow:0 1px 2px rgba(11,31,119,.06),0 6px 20px rgba(11,31,119,.07);
+  --f-display:"Alexandria","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#081033; --surface:#0F1A47; --sunk:#0B143B; --line:#22306A;
+  --fg:#E8ECFA; --muted:#A0AAD0;
+  --primary:#3FC3F2; --on-primary:#06103A;
+  --blue-soft:#0C2C55; --teal-soft:#0B3340; --orange-soft:#3A2810; --navy-soft:#16245E;
+  --blue-ink:#6FD3F7; --teal-ink:#4FD9C2; --orange-ink:#F7B15A;
+  --good:#4CC17E; --good-soft:#123326; --bad:#EE7C74; --bad-soft:#3A1C1E;
+  --logo-chip:#FFFFFF;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.28); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#081033; --surface:#0F1A47; --sunk:#0B143B; --line:#22306A;
+  --fg:#E8ECFA; --muted:#A0AAD0;
+  --primary:#3FC3F2; --on-primary:#06103A;
+  --blue-soft:#0C2C55; --teal-soft:#0B3340; --orange-soft:#3A2810; --navy-soft:#16245E;
+  --blue-ink:#6FD3F7; --teal-ink:#4FD9C2; --orange-ink:#F7B15A;
+  --good:#4CC17E; --good-soft:#123326; --bad:#EE7C74; --bad-soft:#3A1C1E;
+  --logo-chip:#FFFFFF;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.28); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{direction:rtl}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.65;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.3;text-wrap:balance;margin:0}
+p{margin:0}
+img{max-width:100%}
+.lt{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.wrap{max-width:1000px;margin:0 auto}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:8px}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--blue-ink)}
+[hidden]{display:none!important}
+
+/* top bar with the logo's three-colour stroke underneath */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);
+  margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-left,0px)) 12px}
+.bar::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:linear-gradient(90deg,var(--orange) 0 33%,var(--teal) 33% 66%,var(--blue) 66%)}
+.bar-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0}
+.brand img{height:34px;width:auto;display:block;background:var(--logo-chip);border-radius:8px;padding:2px 6px}
+.brand span{font-family:var(--f-display);font-weight:700;font-size:1rem;border-inline-start:1px solid var(--line);padding-inline-start:10px}
+.bar .sp{flex:1}
+.xp{display:flex;align-items:center;gap:8px;min-width:0}
+.lvl{font-size:.78rem;font-weight:700;background:var(--orange-soft);color:var(--orange-ink);padding:3px 10px;border-radius:999px;white-space:nowrap}
+.xpbar{width:110px;height:8px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));border-radius:99px;transition:width .5s}
+.xpnum{font-size:.85rem;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.nav{display:flex;gap:6px}
+.navbtn{background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.86rem;font-weight:600}
+.sync{font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.sync.ok{background:var(--good-soft);color:var(--good)}
+.sync.wait{background:var(--orange-soft);color:var(--orange-ink)}
+.sync.demo{background:var(--sunk);color:var(--muted)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 20px;font-weight:700;font-size:1rem;background:var(--primary);color:var(--on-primary);text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--blue-ink);border:1.5px solid var(--blue)}
+.btn.orange{background:var(--orange);color:#fff}
+.btn.teal{background:var(--teal);color:#fff}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.sm{padding:9px 14px;font-size:.92rem}
+
+/* ===== landing ===== */
+.hero{padding:36px 0 8px;display:grid;gap:18px}
+.hero h1{font-size:clamp(1.9rem,6vw,3.1rem);font-weight:800;color:var(--fg)}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--teal),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:1.1rem;max-width:60ch;color:var(--muted)}
+.reg{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;max-width:640px;box-shadow:var(--shadow);display:grid;gap:12px}
+.reg .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.reg h2{font-size:1.05rem}
+.reg .ok{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+section.blk{margin-top:44px;display:grid;gap:16px}
+section.blk>h2{font-size:1.45rem}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:s;padding:0;margin:0}
+.loop li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:6px;align-content:start}
+.loop li::before{counter-increment:s;content:counter(s);font-family:var(--f-display);font-weight:800;font-size:.85rem;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue-ink)}
+.loop li.field{background:var(--navy);color:#fff;border-color:var(--navy)}
+.loop li.field::before{background:var(--orange);color:#fff}
+.loop li.field .muted{color:rgba(255,255,255,.82)}
+.loop h3{font-size:1.05rem}
+.loop .t{font-size:.78rem;font-weight:600;opacity:.8}
+.dayshape{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.dayshape .row{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:12px 16px;border-top:1px solid var(--line);align-items:baseline}
+.dayshape .row:first-child{border-top:0}
+.dayshape .tm{font-variant-numeric:tabular-nums;font-weight:700;color:var(--blue-ink);font-size:.92rem}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.levels div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:2px}
+.levels b{font-family:var(--f-display)}
+.levels span{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rule{border-radius:14px;padding:14px;display:grid;gap:4px;border:1px solid var(--line);background:var(--surface)}
+.rule b{font-family:var(--f-display);font-size:.95rem}
+.rule.yes{border-top:4px solid var(--good)}
+.rule.ask{border-top:4px solid var(--orange)}
+.rule.no{border-top:4px solid var(--bad)}
+.cta{margin-top:36px;display:flex;gap:12px;flex-wrap:wrap}
+
+/* ===== map ===== */
+.mapintro{padding:28px 0 6px;display:grid;gap:6px}
+.mapintro h1{font-size:clamp(1.5rem,5vw,2.2rem)}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.badge{display:inline-flex;gap:6px;align-items:center;font-size:.82rem;font-weight:600;padding:5px 10px;border-radius:999px;border:1px dashed var(--line);color:var(--muted)}
+.badge.on{border-style:solid;border-color:var(--orange);background:var(--orange-soft);color:var(--fg)}
+.badge svg{width:14px;height:14px}
+.aisle{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.tag{position:relative;text-align:start;background:var(--surface);border:1px solid var(--line);border-radius:6px 16px 16px 6px;padding:14px 16px 14px 14px;display:grid;gap:6px;box-shadow:var(--shadow);min-height:150px;align-content:start}
+.tag::after{content:"";position:absolute;inset-inline-start:-1px;top:14px;bottom:14px;width:5px;border-radius:0 4px 4px 0;background:var(--line)}
+.tag.open::after{background:var(--blue)}
+.tag.done::after{background:var(--teal)}
+.tag .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tag .code{font-family:var(--f-display);font-weight:800;font-size:.8rem;letter-spacing:.08em;color:var(--muted)}
+.tag .num{font-family:var(--f-display);font-weight:800;font-size:1.6rem;line-height:1;font-variant-numeric:tabular-nums;color:var(--fg)}
+.tag h3{font-size:1.02rem}
+.tag .st{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;justify-self:start}
+.st.locked,.st.soon{background:var(--sunk);color:var(--muted)}
+.st.open{background:var(--blue-soft);color:var(--blue-ink)}
+.st.done{background:var(--teal-soft);color:var(--teal-ink)}
+.tag.locked{opacity:.62}
+.tag .mini{font-size:.82rem;color:var(--muted)}
+.tag:not(.locked):hover{border-color:var(--blue)}
+.previewtoggle{display:flex;gap:8px;align-items:center;font-size:.85rem;color:var(--muted);margin-top:16px}
+
+/* ===== day ===== */
+.dayhead{padding:24px 0 6px;display:grid;gap:8px}
+.back{background:none;border:0;padding:0;color:var(--blue-ink);font-weight:600;font-size:.92rem;justify-self:start}
+.dayhead h1{font-size:clamp(1.6rem,5.5vw,2.4rem)}
+.progress{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.progress span{font-size:.8rem;padding:3px 10px;border-radius:999px;background:var(--sunk);color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+.progress span.ok{background:var(--good-soft);color:var(--good)}
+.stage{margin-top:30px;display:grid;gap:12px}
+.stage>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.stage>header .n{font-family:var(--f-display);font-weight:800;color:var(--orange-ink);font-size:.9rem}
+.stage>header h2{font-size:1.25rem}
+.pages{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.pages button{flex:0 0 auto;width:120px;border:1px solid var(--line);border-radius:10px;padding:0;overflow:hidden;background:#fff;scroll-snap-align:start}
+.pages img{display:block;width:100%;height:auto}
+.dl{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.note{font-size:.84rem;color:var(--muted)}
+
+.pairs{display:grid;gap:12px}
+.pair{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.pair .g,.pair .m{padding:14px;display:grid;gap:8px;align-content:start}
+.pair .m{background:var(--teal-soft)}
+.pair .link{display:grid;place-items:center;background:var(--sunk);color:var(--teal-ink)}
+.pair .link svg{width:18px;height:18px}
+.pair .k{font-size:.74rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.pair .m .k{color:var(--teal-ink)}
+.pair h3{font-size:1.05rem}
+.pair p{font-size:.9rem}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.chip{font-size:.78rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.chip.ok{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--orange-soft);color:var(--orange-ink)}
+
+/* ===== 30-item hunt ===== */
+.huntbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.huntbar .meter{flex:1;min-width:140px;height:10px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.huntbar .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--teal))}
+.huntbar b{font-family:var(--f-display);font-variant-numeric:tabular-nums}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:.84rem;font-weight:600}
+.filters button[aria-pressed="true"]{background:var(--navy-soft);border-color:var(--primary);color:var(--fg)}
+.hunt{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.hi{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:10px;text-align:start;display:grid;gap:4px;align-content:start;min-height:88px;position:relative}
+.hi .nm{font-family:var(--f-display);font-weight:700;font-size:.95rem;direction:ltr;text-align:right}
+.hi .ct{font-size:.74rem;color:var(--muted)}
+.hi .s{font-size:.72rem;font-weight:700;justify-self:start;padding:1px 8px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.hi.done{border-color:var(--teal);background:var(--teal-soft)}
+.hi.done .s{background:var(--teal);color:#fff}
+.hi.miss{border-color:var(--orange)}
+.hi.miss .s{background:var(--orange-soft);color:var(--orange-ink)}
+.hi.draft .s{background:var(--blue-soft);color:var(--blue-ink)}
+.hi:hover{border-color:var(--blue)}
+
+/* ===== leaderboard ===== */
+.tabs{display:flex;gap:6px;background:var(--sunk);border-radius:12px;padding:4px;justify-self:start}
+.tabs button{border:0;background:transparent;border-radius:9px;padding:7px 16px;font-weight:700;font-size:.92rem;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
+.board{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.brow{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+.brow:first-child{border-top:0}
+.brow .rk{font-family:var(--f-display);font-weight:800;font-size:1.1rem;text-align:center;font-variant-numeric:tabular-nums;color:var(--muted)}
+.brow.top1 .rk{color:var(--orange-ink)} .brow.top2 .rk{color:var(--blue-ink)} .brow.top3 .rk{color:var(--teal-ink)}
+.brow .who{display:grid;min-width:0}
+.brow .who b{font-family:var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .who span{font-size:.82rem;color:var(--muted)}
+.brow .pts{font-family:var(--f-display);font-weight:800;font-variant-numeric:tabular-nums;text-align:end}
+.brow .pts small{display:block;font-family:var(--f-body);font-weight:600;font-size:.75rem;color:var(--muted)}
+.brow.me{background:var(--blue-soft)}
+.demo-note{font-size:.84rem;background:var(--orange-soft);border-radius:10px;padding:8px 12px}
+
+/* ===== overlay ===== */
+.ov{position:fixed;inset:0;z-index:20;background:var(--bg);overflow-y:auto;
+  padding:calc(env(safe-area-inset-top,0px) + 12px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 32px) max(16px,env(safe-area-inset-left,0px))}
+.ov-in{max-width:760px;margin:0 auto;display:grid;gap:16px}
+.ovtop{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.ovtop h2{font-size:1.25rem}
+.x{background:var(--sunk);border:1px solid var(--line);border-radius:10px;width:40px;height:40px;display:grid;place-items:center;flex:0 0 auto}
+.x svg{width:18px;height:18px}
+.hud{display:flex;gap:10px;flex-wrap:wrap}
+.hud span{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem;font-variant-numeric:tabular-nums}
+.hud b{font-family:var(--f-display)}
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:.92rem}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mcol{display:grid;gap:8px;align-content:start}
+.mcol h4{font-size:.8rem;color:var(--muted);font-weight:700}
+.card{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 12px;text-align:start;font-weight:600;font-size:.93rem;transition:transform .12s,border-color .12s,background .12s}
+.card.mbrand{font-family:var(--f-display);letter-spacing:.02em}
+.card.sel{border-color:var(--orange);background:var(--orange-soft)}
+.card.ok{border-color:var(--good);background:var(--good-soft);opacity:.7;pointer-events:none}
+.card.no{border-color:var(--bad);background:var(--bad-soft);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){.card.no{animation:none}.xpbar i{transition:none}}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:14px}
+.q .big{font-family:var(--f-display);font-size:1.7rem;font-weight:800;text-align:center;padding:10px 0}
+.q .stem{font-size:1.05rem;font-weight:600}
+.q .who{font-size:.8rem;font-weight:700;color:var(--orange-ink)}
+.opts{display:grid;gap:8px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;text-align:start;font-weight:600}
+.opt:hover{border-color:var(--blue)}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.no{border-color:var(--bad);background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 14px;font-size:.93rem;display:grid;gap:6px}
+.fb.ok{background:var(--good-soft)}
+.fb.no{background:var(--bad-soft)}
+.fb.info{background:var(--blue-soft)}
+.fb b{font-family:var(--f-display)}
+.fb .tip{font-size:.86rem;color:var(--muted)}
+.pbar{height:6px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--orange)}
+.result{text-align:center;display:grid;gap:12px;justify-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 18px}
+.result .score{font-family:var(--f-display);font-weight:800;font-size:3rem;color:var(--blue-ink);font-variant-numeric:tabular-nums;line-height:1}
+.result .next{background:var(--teal-soft);border-radius:14px;padding:14px;text-align:start;display:grid;gap:6px;width:100%}
+.result .next .k{font-size:.78rem;font-weight:700;color:var(--teal-ink)}
+.form{display:grid;gap:14px}
+.steps{margin:0;padding-inline-start:20px;display:grid;gap:6px}
+.fld{display:grid;gap:6px}
+.fld label,.fld .lb{font-weight:600;font-size:.92rem}
+.fld input[type=text],.fld input[type=email],.fld textarea,.fld select{font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);width:100%}
+.fld textarea{min-height:76px;resize:vertical}
+.fld .hint{font-size:.8rem;color:var(--muted)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg label{display:flex;gap:6px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font-weight:600;font-size:.92rem;background:var(--surface);cursor:pointer}
+.seg input{accent-color:var(--teal)}
+.seg label:has(input:checked){border-color:var(--teal);background:var(--teal-soft)}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:16px;text-align:center;display:grid;gap:8px;justify-items:center;background:var(--surface)}
+.drop input{max-width:100%}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.enc{border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;background:var(--surface)}
+.enc h4{font-size:.98rem}
+.maprow{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.maprow:first-child{border-top:0}
+.warn{background:var(--bad-soft);border-radius:12px;padding:10px 14px;font-size:.88rem}
+.bingo{display:grid;grid-template-columns:1fr;gap:8px}
+.bingo button{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:10px;text-align:start}
+.bingo button::before{content:"";width:20px;height:20px;border-radius:6px;border:2px solid var(--line);flex:0 0 auto;background:var(--surface)}
+.bingo button.on::before{border-color:#fff;background:#fff;box-shadow:inset 0 0 0 4px var(--teal)}
+.bingo button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.viewer img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff}
+.vnav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);inset-inline:0;margin:auto;width:max-content;max-width:calc(100% - 32px);z-index:40;background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:600;box-shadow:var(--shadow)}
+.soonlist{display:grid;gap:10px;padding:0;margin:0}
+.soonlist li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:4px}
+.soonlist .k{font-size:.76rem;font-weight:700;color:var(--muted)}
+
+@media (max-width:820px){
+  .loop{grid-template-columns:1fr 1fr}
+  .aisle{grid-template-columns:1fr 1fr}
+  .rules{grid-template-columns:1fr}
+  .levels{grid-template-columns:1fr 1fr}
+  .hunt{grid-template-columns:repeat(3,1fr)}
+  .xpbar{width:64px}
+}
+@media (max-width:560px){
+  .pair{grid-template-columns:1fr}
+  .pair .link{padding:4px 0}
+  .pair .link svg{transform:rotate(90deg)}
+  .aisle{grid-template-columns:1fr}
+  .tag{min-height:0}
+  .dayshape .row{grid-template-columns:1fr;gap:2px}
+  .hunt{grid-template-columns:1fr 1fr}
+  .reg .g2{grid-template-columns:1fr}
+  .card{font-size:.86rem;padding:10px}
+  .brand span{display:none}
+  .nav .navbtn.lb{display:none}
+}
+
+/* ===== v3: flow, product cards, quizzes ===== */
+.flow{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flow li{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:8px;align-content:start}
+.flow li.hot{background:var(--navy);border-color:var(--navy);color:#fff}
+.flow li.hot .chip{background:var(--orange);color:#fff}
+.flow .fk{font-size:.78rem;font-weight:700;color:var(--orange-ink)}
+.flow li.hot .fk{color:#FFC680}
+.flow h3{font-size:1.2rem}
+.flow .chip{justify-self:start}
+details.ref{margin-top:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+details.ref summary{cursor:pointer;font-weight:700;color:var(--blue-ink)}
+details.ref[open]{display:grid;gap:10px}
+.prods{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.pc{border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:0;overflow:hidden;display:grid;text-align:start}
+.pc:hover{border-color:var(--blue)}
+.pimg{display:block;aspect-ratio:1/1;max-width:100%;background:#fff;border-bottom:1px solid var(--line)}
+.pimg img{width:100%;height:100%;object-fit:contain;display:block}
+.ph{width:100%;height:100%;display:grid;place-content:center;justify-items:center;gap:2px;background:repeating-linear-gradient(45deg,var(--sunk) 0 10px,var(--bg) 10px 20px);color:var(--muted)}
+.ph b{font-family:var(--f-display);font-size:1.6rem;color:var(--fg)}
+.ph span{font-size:.75rem}
+.pmeta{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:8px 10px}
+.pmeta b{font-family:var(--f-display);font-variant-numeric:tabular-nums}
+.pmeta .s{font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.pc.done{border-color:var(--teal)}
+.pc.done .pmeta{background:var(--teal-soft)}
+.pc.done .s{background:var(--teal);color:#fff}
+.pc.draft .s{background:var(--blue-soft);color:var(--blue-ink)}
+.pname{font-size:.75rem;color:var(--muted);padding:0 10px 8px;text-align:left}
+.bigimg{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;max-width:360px;width:100%;aspect-ratio:1/1;justify-self:center}
+.bigimg img{width:100%;height:100%;object-fit:contain;display:block}
+.locked{display:flex;gap:10px;align-items:center;background:var(--orange-soft);border-radius:12px;padding:10px 14px;font-weight:600}
+.locked svg{width:20px;height:20px;flex:0 0 auto;color:var(--orange-ink)}
+.quizzes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.qz{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:8px;align-content:start;border-top:4px solid var(--orange)}
+.qz.off{opacity:.55;border-top-color:var(--line)}
+.qz h3{font-size:1.1rem}
+.slots{display:grid;gap:12px}
+.slot{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0;display:grid;gap:8px;min-width:0}
+.slot legend{font-weight:700;font-size:.9rem;color:var(--blue-ink);padding:0 6px}
+.opt.sel{border-color:var(--orange);background:var(--orange-soft)}
+.sfb{font-size:.86rem}
+.sfb .okt{color:var(--good)} .sfb .not{color:var(--bad)}
+@media (max-width:820px){.prods{grid-template-columns:repeat(3,1fr)}.quizzes{grid-template-columns:1fr}}
+@media (max-width:560px){.prods{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="bar-in">
+  <button class="brand" data-go="home" aria-label="الصفحة الرئيسية"><img src="assets/logo.png" alt="صيدلية المتحدة"><span>رحلة الفرع</span></button>
+  <span class="sp"></span>
+  <span class="sync demo" id="sync">وضع تجريبي</span>
+  <div class="xp" aria-label="نقاط الخبرة">
+    <span class="lvl" id="lvl">Trainee</span>
+    <div class="xpbar"><i id="xpfill" style="width:0"></i></div>
+    <span class="xpnum" id="xpnum">0 XP</span>
+  </div>
+  <nav class="nav"><button class="navbtn" data-go="map">الخريطة</button><button class="navbtn lb" data-go="board">الترتيب</button></nav>
+</div></header>
+
+<main class="wrap" id="app"></main>
+<div id="ovroot"></div>
+<div id="toastroot"></div>
+
+<script>
+/* =====================================================================
+   CONFIG — الإعدادات اللي هتغيرها (اقرا README.md)
+   ===================================================================== */
+const CONFIG = {
+  // رابط الـ Web App بتاع Google Apps Script. لو فاضي المنصة بتشتغل في وضع تجريبي.
+  SHEETS_URL: "https://script.google.com/macros/s/AKfycbzpa9xeEWZJM71IwNsus_ODMy3MdzJAQ5OCqIYSCADPLlx6ReMUQYFXFqD_cR45knBu/exec",
+  // نفس الكلمة اللي في Code.gs (SHARED_KEY). اختياري.
+  SHARED_KEY: "",
+  // تاريخ فتح كل يوم فرع (سنة-شهر-يوم). اليوم بيتفتح تلقائيًا من أول الساعة 12 بالليل في التاريخ ده.
+  DAY_DATES: { 1:"2026-11-09", 2:"2026-11-11", 3:"2026-11-12", 4:"2026-11-21", 5:"2026-11-25", 6:"2026-11-26", 7:"2026-12-10" },
+  // مكان صور المنتجات: pic/1.png و pic/2.png ...
+  PIC: n => `pic/${n}.png`,
+  // النقط
+  XP_PER_PRODUCT: 5, XP_ACTIVE_BONUS: 10, XP_QUIZ_MAX: 300,
+  // زراير تحميل ملفات الـ PDF
+  DOWNLOADS: true,
+  // وضع المعاينة لفريق التدريب. false = مقفول: المتدرب ميشوفش الاختيار ده، والتحديات متتفتحش غير بعد ما يخلّص كل منتجات اليوم.
+  // خليه true على نسخة خاصة بفريق التدريب بس، عشان تتفرجوا على كل الأيام والتحديات من غير ما تكمّلوا البيانات.
+  PREVIEW: /*@PREVIEW@*/false
+};
+
+/* ================= DATA ================= */
+const ICON = {
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'
+};
+const LEVELS=[{n:'Trainee',min:0,ar:'متدرب'},{n:'Junior',min:1000,ar:'صيدلي مبتدئ'},{n:'Pharmacist',min:3000,ar:'صيدلي'},{n:'Expert',min:6000,ar:'خبير'}];
+const BADGES={
+  collector:{t:'جامع البيانات',d:'كمّل بيانات كل منتجات يوم'},
+  perfect:{t:'Full Mark',d:'جيب 100% في أي لعبة'},
+  streak:{t:'على الموعد',d:'خلّص يوم في نفس تاريخه'}
+};
+
+/* ===== منتجات كل يوم: [رقم الصورة, اسم المنتج, الفرع الرئيسي, الفرع الفرعي, المادة الفعالة, نص التصحيح الأوتوماتيك]
+   الصورة بتتقرا من pic/رقم.png. نص التصحيح فاضي = مفيش تصحيح أوتوماتيك (فريق التدريب بيراجع).
+   "A / B" = أي اسم من الاتنين مقبول، و "+" = كل المكونات لازم تتكتب. ===== */
+const PRODUCTS={
+ 1:[
+  [1, "Cetaphil Gentle Cleansing Bar", "Daily care", "Soap bar", "Cleansing bar", ""],
+  [2, "ISIS Teen Derm Gel Sensitive", "Daily care", "Liquid cleanser", "Gel cleanser", ""],
+  [3, "Bioderma Atoderm Huile de Douche", "Daily care", "Liquid cleanser", "Cleansing oil", ""],
+  [4, "LCA Micellar Water", "Daily care", "Micellar water", "Micellar water", ""],
+  [5, "Bioderma Sensibio H2O", "Daily care", "Micellar water", "Micellar water", ""],
+  [6, "Beesline Whitening Facial Toner", "Daily care", "Toner", "Toner", ""],
+  [7, "Eucerin DermoPurifyer Toner", "Daily care", "Toner", "Toner", ""],
+  [8, "Caudalie Crushed Cabernet Scrub", "Daily care", "Scrub", "Physical exfoliant", ""],
+  [9, "La Roche-Posay Hyalu B5 Serum", "Daily care", "Humectant", "Hyaluronic acid + Vitamin B5", "Hyaluronic"],
+  [10, "CeraVe Moisturizing Cream", "Daily care", "Emollient", "Ceramides", "Ceramide"],
+  [11, "Vaseline Petroleum Jelly", "Daily care", "Occlusive", "Petrolatum", "Petrolatum / Petroleum jelly / Vaseline"],
+  [12, "Bioderma Atoderm Intensive Baume", "Daily care", "Occlusive", "Occlusive balm", ""],
+  [13, "Bioderma Photoderm Max SPF50 Aquafluid", "Daily care", "Sunscreen", "Sunscreen SPF50", ""],
+  [14, "La Roche-Posay Anthelios SPF50 Fluid", "Daily care", "Sunscreen", "Sunscreen SPF50", ""],
+  [15, "Sebamed Multi Protect SPF50", "Daily care", "Sunscreen", "Sunscreen SPF50", ""],
+  [16, "ISIS UVEBlock SPF50 Body Lotion", "Daily care", "Sunscreen", "Sunscreen SPF50", ""],
+  [17, "Differin Gel", "Acne", "Comedolytic / keratolytic", "Adapalene (Rx)", "Adapalene"],
+  [18, "L'Oreal Glycolic Bright Peeling Toner", "Acne", "Comedolytic / keratolytic", "Glycolic acid", "Glycolic"],
+  [19, "Bioderma Sebium Global", "Acne", "Sebum regulator", "Sebum regulator", ""],
+  [20, "Skincode Pore Refining Mask", "Acne", "Sebum regulator", "Clay / sebum regulator", ""],
+  [21, "Benzac AC 5% Gel", "Acne", "Antibacterial", "Benzoyl peroxide 5%", "Benzoyl peroxide"],
+  [22, "Avene Thermal Spring Water", "Acne", "Soothing", "Thermal spring water", ""],
+  [23, "Beauty of Joseon Glow Deep Serum", "Hyperpigmentation", "Tyrosinase inhibitor", "Rice + Alpha-arbutin", "Arbutin"],
+  [24, "The Ordinary Niacinamide", "Hyperpigmentation", "Melanosome transfer inhibitor", "Niacinamide + Zinc", "Niacinamide"],
+  [25, "The Ordinary Lactic Acid 5% + HA", "Hyperpigmentation", "Exfoliator", "Lactic acid + Hyaluronic acid", "Lactic"],
+  [26, "Esthederm Intensive Retinol Cream", "Wrinkles", "Fibroblast stimulator", "Retinol", "Retinol"],
+  [27, "La Roche-Posay Retinol B3 Serum", "Wrinkles", "Fibroblast stimulator", "Retinol + Niacinamide", "Retinol"],
+  [28, "Garnier Fast Bright Vitamin C Serum", "Wrinkles", "Antioxidant", "Vitamin C", "Vitamin C / Ascorbic"],
+  [29, "L'Oreal Ginseng Anti-aging Cream", "Wrinkles", "Circulation promoter", "Ginseng", "Ginseng"],
+  [30, "The Ordinary Caffeine Solution", "Wrinkles", "Circulation promoter", "Caffeine + EGCG", "Caffeine"]
+ ],
+ 2:[
+  [31, "Ventolin Evohaler 100 mcg", "Asthma", "SABA", "Salbutamol", "Salbutamol"],
+  [32, "Spiriva 18 mcg", "Asthma", "Muscarinic antagonist", "Tiotropium", "Tiotropium"],
+  [33, "Pulmicort Turbuhaler 200 mcg", "Asthma", "Inhaled corticosteroid", "Budesonide", "Budesonide"],
+  [34, "Predo 5 mg", "Asthma", "Systemic corticosteroid", "Prednisolone", "Prednisolone"],
+  [35, "Airfast 10 mg", "Asthma", "Leukotriene antagonist", "Montelukast", "Montelukast"],
+  [36, "Riaphyllin Syrup", "Asthma", "Methylxanthine", "Theophylline", "Theophylline"],
+  [37, "Seretide Diskus 250", "Asthma", "Inhaler combination", "Fluticasone + Salmeterol", "Fluticasone + Salmeterol"],
+  [38, "Kafosed Syrup", "Cough", "Cough suppressant", "Dextromethorphan", "Dextromethorphan"],
+  [39, "Propolsaft Syrup", "Cough", "Demulcent / herbal", "Honey + Thyme", "Honey + Thyme"],
+  [40, "Mucinex 600 mg", "Cough", "Expectorant", "Guaifenesin", "Guaifenesin"],
+  [41, "Mucosolvan Forte Syrup", "Cough", "Mucolytic", "Ambroxol", "Ambroxol"],
+  [42, "Rhinathiol Promethazine Syrup", "Cough", "Cough combination", "Carbocisteine + Promethazine", "Carbocisteine / Carbocysteine + Promethazine"],
+  [43, "Histop 4 mg", "Antihistamines", "1st generation", "Chlorphenamine", "Chlorphenamine / Chlorpheniramine"],
+  [44, "Telfast 180 mg", "Antihistamines", "2nd generation", "Fexofenadine", "Fexofenadine"],
+  [45, "Aquamer Nasal Spray", "Nasal", "Sea water", "Sea water", ""],
+  [46, "Otrivin Nasal Spray", "Nasal", "Decongestant", "Xylometazoline", "Xylometazoline"],
+  [47, "Dymista Nasal Spray", "Nasal", "Nasal antihistamine", "Azelastine + Fluticasone", "Azelastine + Fluticasone"],
+  [48, "Avamys Nasal Spray", "Nasal", "Nasal corticosteroid", "Fluticasone furoate", "Fluticasone furoate"],
+  [49, "Fludrex Tablets", "Cold & flu", "Cold & flu combination", "Paracetamol + Chlorphenamine + Pseudoephedrine + Caffeine", "Paracetamol + Chlorphenamine / Chlorpheniramine + Pseudoephedrine"],
+  [50, "Strepsils Extra", "Throat & immunity", "Lozenge", "Lozenge", "Amylmetacresol + Dichlorobenzyl alcohol"],
+  [51, "Vivamune 250 mg", "Throat & immunity", "Immunostimulant", "Beta-glucan", "Glucan"],
+  [52, "Gaviscon Double Action", "Hyperacidity", "Antacid / alginate", "Alginate + Antacid", "Alginate"],
+  [53, "Famodar 20 mg", "Hyperacidity", "H2 blocker", "Famotidine", "Famotidine"],
+  [54, "Omiz 20 mg", "Hyperacidity", "Proton pump inhibitor", "Omeprazole", "Omeprazole"],
+  [55, "Premosan 10 mg", "Anti-emetics", "D2 antagonist", "Metoclopramide", "Metoclopramide"],
+  [56, "Zoron 4 mg", "Anti-emetics", "5-HT3 antagonist", "Ondansetron", "Ondansetron"],
+  [57, "Vominore", "Motion sickness", "Antihistamine", "Meclizine + Vitamin B6", "Meclizine / Meclozine"],
+  [58, "Pentasa 500 mg", "IBD", "Aminosalicylate", "Mesalazine", "Mesalazine"],
+  [59, "Imuran 50 mg", "IBD", "Immunosuppressant", "Azathioprine", "Azathioprine"],
+  [60, "Humira 40 mg", "IBD", "Biologic", "Adalimumab", "Adalimumab"]
+ ],
+ 3:[
+  [61, "Imodium 2 mg", "Anti-diarrheal", "Opioid agonist", "Loperamide", "Loperamide"],
+  [62, "Dioclear Sachets", "Anti-diarrheal", "Adsorbent", "Diosmectite", "Diosmectite / Smectite"],
+  [63, "ElectroRush Apple", "Anti-diarrheal", "ORS", "Oral rehydration solution", ""],
+  [64, "Antinal 200 mg", "Anti-diarrheal", "Luminal antimicrobial", "Nifuroxazide", "Nifuroxazide"],
+  [65, "Furazol", "Anti-diarrheal", "Luminal antiprotozoal", "Diloxanide furoate + Metronidazole", "Diloxanide + Metronidazole"],
+  [66, "Anazol 500 mg", "Anti-diarrheal", "Systemic antiprotozoal", "Metronidazole", "Metronidazole"],
+  [67, "Bio-Fiber", "Laxatives", "Bulk-forming", "Dietary fiber", ""],
+  [68, "Duphalac", "Laxatives", "Osmotic", "Lactulose", "Lactulose"],
+  [69, "Dulcolax 5 mg", "Laxatives", "Stimulant", "Bisacodyl", "Bisacodyl"],
+  [70, "Laxatrol", "Laxatives", "Stool softener", "Docusate sodium", "Docusate"],
+  [71, "Resolor 2 mg", "Laxatives", "5-HT4 agonist", "Prucalopride", "Prucalopride"],
+  [72, "Buscopan 10 mg", "Antispasmodics", "Antimuscarinic", "Hyoscine butylbromide", "Hyoscine butylbromide"],
+  [73, "Duspatalin Retard", "Antispasmodics", "Direct smooth muscle relaxant", "Mebeverine", "Mebeverine"],
+  [74, "Dicetel 50 mg", "Antispasmodics", "Calcium channel blocker", "Pinaverium bromide", "Pinaverium bromide"],
+  [75, "Centrum with Lutein", "Vitamins & multivitamins", "Multivitamin", "Multivitamin + Minerals", ""],
+  [76, "Neurobion", "Vitamins & multivitamins", "B complex", "Vitamin B1 + B6 + B12", "B1 / Thiamine + B6 / Pyridoxine + B12 / Cyanocobalamin"],
+  [77, "Effervit-C", "Vitamins & multivitamins", "Vitamin C", "Vitamin C", "Vitamin C / Ascorbic"],
+  [78, "Folicum 5 mg", "Vitamins & multivitamins", "Folic acid", "Folic acid", "Folic"],
+  [79, "Evit 400 mg", "Vitamins & multivitamins", "Vitamin E", "Vitamin E", "Vitamin E / Tocopherol"],
+  [80, "Vidrop", "Vitamins & multivitamins", "Vitamin D", "Vitamin D3", "D3 / Cholecalciferol"],
+  [81, "Feroglobin", "Minerals", "Iron", "Iron + B vitamins", "Iron"],
+  [82, "Osteocare", "Minerals", "Calcium", "Calcium + Magnesium + Zinc + Vitamin D", "Calcium"],
+  [83, "Jamieson Magnesium 100 mg", "Minerals", "Magnesium", "Magnesium", "Magnesium"],
+  [84, "V-Zinc", "Minerals", "Zinc", "Zinc", "Zinc"],
+  [85, "Nutraquinol 100 mg", "Vitamin-like", "Coenzyme Q10", "Coenzyme Q10", "Coenzyme Q10 / CoQ10 / Ubiquinol"],
+  [86, "Thiotacid 600 mg", "Vitamin-like", "Alpha-lipoic acid", "Alpha-lipoic acid", "Alpha-lipoic acid"],
+  [87, "Ultra Cranberry", "Herbal & natural", "Cranberry", "Cranberry", "Cranberry"],
+  [88, "Ashwag 300 mg", "Herbal & natural", "Ashwagandha", "Ashwagandha", "Ashwagandha"],
+  [89, "Glavolean 300 mg", "Herbal & natural", "Weight loss", "Glabridin (licorice extract)", ""],
+  [90, "JP Omega-3 1000 mg", "Herbal & natural", "Omega-3", "Omega-3 fatty acids", "Omega"]
+ ],
+ 4:[
+  [91, "Systane Ultra UD", "Eye lubricants", "PEG + PG", "Polyethylene glycol + Propylene glycol", "Polyethylene glycol + Propylene glycol"],
+  [92, "Hylo-Gel", "Eye lubricants", "Sodium hyaluronate", "Sodium hyaluronate", "Sodium hyaluronate"],
+  [93, "Lumify", "Eye decongestants", "Low-dose brimonidine", "Brimonidine 0.025%", "Brimonidine"],
+  [94, "Naphcon-A", "Eye decongestants", "Combination", "Naphazoline + Pheniramine", "Naphazoline + Pheniramine"],
+  [95, "Patanol", "Eye antihistamines & mast cell stabilizers", "Dual action", "Olopatadine", "Olopatadine"],
+  [96, "Xalatan", "Anti-glaucoma", "Prostaglandin analogue", "Latanoprost", "Latanoprost"],
+  [97, "Alphagan-P", "Anti-glaucoma", "Alpha-2 agonist", "Brimonidine", "Brimonidine"],
+  [98, "Apimol 0.5%", "Anti-glaucoma", "Beta blocker", "Timolol", "Timolol"],
+  [99, "Azopt", "Anti-glaucoma", "Carbonic anhydrase inhibitor", "Brinzolamide", "Brinzolamide"],
+  [100, "Cosopt", "Anti-glaucoma", "Combination", "Dorzolamide + Timolol", "Dorzolamide + Timolol"],
+  [101, "Optipred", "Eye anti-inflammatory", "Corticosteroid", "Prednisolone", "Prednisolone"],
+  [102, "Nevanac", "Eye anti-inflammatory", "NSAID", "Nepafenac", "Nepafenac"],
+  [103, "Vigamox", "Eye antibacterials", "Fluoroquinolone", "Moxifloxacin", "Moxifloxacin"],
+  [104, "Tobradex Eye Drops", "Eye antibacterials", "Aminoglycoside", "Tobramycin + Dexamethasone", "Tobramycin + Dexamethasone"],
+  [105, "Lucentis", "Macular degeneration", "Anti-VEGF", "Ranibizumab", "Ranibizumab"],
+  [106, "Otocol Ear Drops", "Ear drops", "Anti-infective", "Chloramphenicol", "Chloramphenicol"],
+  [107, "Neodex Eye & Ear Drops", "Ear drops", "Antibacterial + anti-inflammatory", "Neomycin + Dexamethasone", "Neomycin + Dexamethasone"],
+  [108, "Dewax Ear Drops", "Ear drops", "Ear hygiene", "Docusate sodium", "Docusate sodium"],
+  [109, "Sinemet", "Anti-Parkinson", "Central dopamine enhancer", "Carbidopa + Levodopa", "Carbidopa + Levodopa"],
+  [110, "Sifrol 0.18 mg", "Anti-Parkinson", "Dopamine agonist", "Pramipexole", "Pramipexole"],
+  [111, "Exelon 3 mg", "Anti-Alzheimer's", "Cholinesterase inhibitor", "Rivastigmine", "Rivastigmine"],
+  [112, "Ebixa 10 mg", "Anti-Alzheimer's", "NMDA antagonist", "Memantine", "Memantine"],
+  [113, "Anafranil 25 mg", "Antidepressants", "TCA", "Clomipramine", "Clomipramine"],
+  [114, "Cipralex 10 mg", "Antidepressants", "SSRI", "Escitalopram", "Escitalopram"],
+  [115, "Cymbalta 60 mg", "Antidepressants", "SNRI", "Duloxetine", "Duloxetine"],
+  [116, "Wellbutrin XL 150 mg", "Antidepressants", "Atypical", "Bupropion", "Bupropion"],
+  [117, "Seroquel 100 mg", "Antipsychotics", "2nd generation", "Quetiapine", "Quetiapine"],
+  [118, "Depakine Chrono 500 mg", "Antipsychotics", "Mood stabilizer", "Sodium valproate", "Valpro"],
+  [119, "Tegretol 200 mg", "Antiepileptics", "Sodium channel modulator", "Carbamazepine", "Carbamazepine"],
+  [120, "Keppra 500 mg", "Antiepileptics", "SV2A modulator", "Levetiracetam", "Levetiracetam"]
+ ],
+ 5:[
+  [121, "Lasix 40 mg", "Diuretics", "Loop", "Furosemide", "Furosemide"],
+  [122, "Natrilix SR", "Diuretics", "Thiazide-like", "Indapamide", "Indapamide"],
+  [123, "Aldactone 25 mg", "Diuretics", "Potassium-sparing", "Spironolactone", "Spironolactone"],
+  [124, "Lodipam 5 mg", "Calcium channel blockers", "Dihydropyridine", "Amlodipine", "Amlodipine"],
+  [125, "Isoptin 40 mg", "Calcium channel blockers", "Non-dihydropyridine", "Verapamil", "Verapamil"],
+  [126, "Concor 5 mg", "Beta blockers", "Selective", "Bisoprolol", "Bisoprolol"],
+  [127, "Inderal 10 mg", "Beta blockers", "Non-selective", "Propranolol", "Propranolol"],
+  [128, "Cardura 1 mg", "Alpha blockers", "Alpha-1 blocker", "Doxazosin", "Doxazosin"],
+  [129, "Ravildo 25 mg", "Alpha & beta blockers", "Mixed", "Carvedilol", "Carvedilol"],
+  [130, "Zestril 10 mg", "ACE inhibitors", "ACEI", "Lisinopril", "Lisinopril"],
+  [131, "Micardis 80 mg", "ARBs", "ARB", "Telmisartan", "Telmisartan"],
+  [132, "Nitroderm TTS 5", "Nitrates", "Long acting", "Glyceryl trinitrate", "Glyceryl trinitrate / Nitroglycerin / GTN"],
+  [133, "Aldomet 250 mg", "Central sympatholytics", "Central alpha-2 agonist", "Methyldopa", "Methyldopa"],
+  [134, "Vastarel MR", "Ischemic heart disease", "Metabolic modulator", "Trimetazidine", "Trimetazidine"],
+  [135, "Entresto 50 mg", "Heart failure", "ARNI", "Sacubitril + Valsartan", "Sacubitril + Valsartan"],
+  [136, "Cordarone 200 mg", "Antiarrhythmics", "Class III", "Amiodarone", "Amiodarone"],
+  [137, "Crestor 10 mg", "Dyslipidemia", "Statin", "Rosuvastatin", "Rosuvastatin"],
+  [138, "Lipanthyl 145 mg", "Dyslipidemia", "Fibrate", "Fenofibrate", "Fenofibrate"],
+  [139, "Ezetrol 10 mg", "Dyslipidemia", "Cholesterol absorption inhibitor", "Ezetimibe", "Ezetimibe"],
+  [140, "Adol 500 mg", "Analgesics", "Paracetamol", "Paracetamol", "Paracetamol"],
+  [141, "Proxen 500 mg", "Analgesics", "Non-selective NSAID", "Naproxen", "Naproxen"],
+  [142, "Celebrex 200 mg", "Analgesics", "Selective COX-2", "Celecoxib", "Celecoxib"],
+  [143, "Benzaflex 5 mg", "Muscle relaxants", "Centrally acting", "Cyclobenzaprine", "Cyclobenzaprine"],
+  [144, "Aspirin Protect 100 mg", "Antiplatelets", "COX inhibitor", "Acetylsalicylic acid", "Acetylsalicylic acid / Aspirin"],
+  [145, "Plavix 75 mg", "Antiplatelets", "P2Y12 inhibitor", "Clopidogrel", "Clopidogrel"],
+  [146, "Coufatex 2 mg", "Anticoagulants", "Vitamin K antagonist", "Warfarin", "Warfarin"],
+  [147, "Eliquis 5 mg", "Anticoagulants", "Factor Xa inhibitor", "Apixaban", "Apixaban"],
+  [148, "Clexane 60 mg", "Anticoagulants", "LMWH", "Enoxaparin", "Enoxaparin"],
+  [149, "Cyklokapron", "Anti-fibrinolytics", "Tranexamic acid", "Tranexamic acid", "Tranexamic"],
+  [150, "Revolade 25 mg", "Hemopoietic agents", "Thrombopoiesis stimulator", "Eltrombopag", "Eltrombopag"]
+ ],
+ 6:[
+  [151, "Amaryl 2 mg", "Insulin secretagogues", "Sulfonylurea", "Glimepiride", "Glimepiride"],
+  [152, "NovoNorm 2 mg", "Insulin secretagogues", "Meglitinide", "Repaglinide", "Repaglinide"],
+  [153, "Glucophage 500 mg", "Insulin sensitizers", "Biguanide", "Metformin", "Metformin"],
+  [154, "Actos 30 mg", "Insulin sensitizers", "Thiazolidinedione", "Pioglitazone", "Pioglitazone"],
+  [155, "Galvus 50 mg", "DPP-4 inhibitors", "DPP-4", "Vildagliptin", "Vildagliptin"],
+  [156, "Forxiga 10 mg", "SGLT-2 inhibitors", "SGLT-2", "Dapagliflozin", "Dapagliflozin"],
+  [157, "Jardiance 25 mg", "SGLT-2 inhibitors", "SGLT-2", "Empagliflozin", "Empagliflozin"],
+  [158, "Actrapid", "Insulins", "Short acting", "Human insulin (regular)", "Human insulin / Regular insulin"],
+  [159, "Insulatard", "Insulins", "Intermediate acting", "Isophane insulin (NPH)", "Isophane / NPH"],
+  [160, "NovoRapid FlexPen", "Insulins", "Rapid acting", "Insulin aspart", "Aspart"],
+  [161, "Lantus SoloStar", "Insulins", "Long acting", "Insulin glargine", "Glargine"],
+  [162, "Tresiba FlexPen", "Insulins", "Long acting", "Insulin degludec", "Degludec"],
+  [163, "NovoMix 30 FlexPen", "Insulins", "Premixed", "Insulin aspart 30/70", "Aspart"],
+  [164, "Ozempic 1 mg", "GLP-1 analogues", "Injectable GLP-1", "Semaglutide", "Semaglutide"],
+  [165, "Mounjaro KwikPen", "GLP-1 analogues", "Dual GIP/GLP-1", "Tirzepatide", "Tirzepatide"],
+  [166, "Rybelsus 7 mg", "GLP-1 analogues", "Oral GLP-1", "Semaglutide (oral)", "Semaglutide"],
+  [167, "Amaryl M", "Combinations", "Sulfonylurea + Metformin", "Glimepiride + Metformin", "Glimepiride + Metformin"],
+  [168, "Janumet", "Combinations", "DPP-4 + Metformin", "Sitagliptin + Metformin", "Sitagliptin + Metformin"],
+  [169, "Xigduo XR", "Combinations", "SGLT-2 + Metformin", "Dapagliflozin + Metformin", "Dapagliflozin + Metformin"],
+  [170, "Xultophy", "Combinations", "GLP-1 + basal insulin", "Insulin degludec + Liraglutide", "Degludec + Liraglutide"],
+  [171, "Forteo", "Serum calcium regulators", "PTH analogue", "Teriparatide", "Teriparatide"],
+  [172, "One Alpha 0.25 mcg", "Serum calcium regulators", "Vitamin D analogue", "Alfacalcidol", "Alfacalcidol"],
+  [173, "Saizen 12 mg", "Growth hormone", "GH", "Somatropin", "Somatropin"],
+  [174, "Minirin Melt 60 mcg", "ADH analogues", "Desmopressin", "Desmopressin", "Desmopressin"],
+  [175, "Sandostatin LAR 20 mg", "Somatostatin analogues", "Octreotide", "Octreotide", "Octreotide"],
+  [176, "Cetrotide 0.25 mg", "Reproductive hormones", "GnRH antagonist", "Cetrorelix", "Cetrorelix"],
+  [177, "NuvaRing", "Reproductive hormones", "Combined contraceptive", "Etonogestrel + Ethinylestradiol", "Etonogestrel + Ethinylestradiol"]
+ ],
+ 7:[
+  [178, "Royal Placenta Hair Shampoo", "Cleansing", "Clarifying shampoo", "Clarifying shampoo", ""],
+  [179, "Herbal Essences Golden Moringa Shampoo", "Cleansing", "Clarifying shampoo", "Clarifying shampoo", ""],
+  [180, "Keratin Therapy Shampoo", "Cleansing", "Sulfate-free shampoo", "Sulfate-free (Keratin)", ""],
+  [181, "Bio Balance Aloe Vera Shampoo", "Cleansing", "Sulfate-free shampoo", "Sulfate-free (Aloe vera)", ""],
+  [182, "Dove 2in1 Daily Care", "Cleansing", "2-in-1 shampoo", "2-in-1 shampoo", ""],
+  [183, "Pantene 2in1 Daily Care", "Cleansing", "2-in-1 shampoo", "2-in-1 shampoo", ""],
+  [184, "Revivexil Hair Growth Shampoo", "Cleansing", "Anti-hair loss shampoo", "Anti-hair loss shampoo", ""],
+  [185, "Capixy Hair Loss Shampoo", "Cleansing", "Anti-hair loss shampoo", "Anti-hair loss shampoo", ""],
+  [186, "Pantene Smooth & Silky Conditioner", "Conditioning", "Instant conditioner", "Instant conditioner", ""],
+  [187, "Il Salone Conditioner", "Conditioning", "Instant conditioner", "Instant conditioner", ""],
+  [188, "Mielle Rosemary Mint Hair Mask", "Conditioning", "Deep conditioner", "Hair mask (Rosemary + Mint)", ""],
+  [189, "Lee Stafford Coco Loco Spritz", "Styling", "Detangling spray", "Detangling spray", ""],
+  [190, "Sunsilk Hair Cream Shine & Strength", "Styling", "Leave-in cream", "Leave-in cream", ""],
+  [191, "Eva Hair Cream Aloe Vera", "Styling", "Leave-in cream", "Leave-in cream (Aloe vera)", ""],
+  [192, "Dabur Vatika Frizz Control Serum", "Styling", "Hair serum", "Hair serum", ""],
+  [193, "Elvive Dream Long Frizz Killer Serum", "Styling", "Hair serum", "Hair serum", ""],
+  [194, "Vichy Dercos Anti-dandruff (Dry Hair)", "Dandruff", "Dry dandruff shampoo", "Anti-dandruff (dry)", ""],
+  [195, "Maxon Anti-dandruff Shampoo", "Dandruff", "Dry dandruff shampoo", "Anti-dandruff (dry)", ""],
+  [196, "Anivagene Anti-dandruff Shampoo", "Dandruff", "Oily dandruff shampoo", "Anti-dandruff (oily)", ""],
+  [197, "Ducray Kelual DS Shampoo", "Dandruff", "Oily dandruff shampoo", "Anti-dandruff (severe / oily)", ""],
+  [198, "Regaine 5% Solution", "Hair loss", "Topical", "Minoxidil 5%", "Minoxidil"],
+  [199, "Revivexil Ampoules", "Hair loss", "Topical", "Anti-hair loss ampoules", ""],
+  [200, "Perfectil", "Hair loss", "Oral supplement", "Hair, skin & nails multivitamin", ""],
+  [201, "Mothernest Biotin + Zinc Candy", "Hair loss", "Oral supplement", "Biotin + Zinc", "Biotin + Zinc"]
+ ]
+};
+
+/* ===== Routine Builder ليوم البشرة ===== */
+const ROUTINES=[
+ {who:'شاب، 18 سنة',stem:'بشرة دهنية، رؤوس سوداء في الأنف والجبهة، وحبوب خفيفة.',slots:[
+   {t:'Cleanser',opts:['ISIS Teen Derm Sensitive Gel','Bioderma Atoderm Huile de Douche','Vaseline Petroleum Jelly','Caudalie Crushed Cabernet Scrub'],ok:0,why:'الـ Gel cleanser مناسب للبشرة الدهنية والمعرضة للحبوب.'},
+   {t:'Treatment',opts:["L'Oreal Glycolic Bright Peeling Toner",'Bioderma Atoderm Intensive Baume','Esthederm Intensive Retinol','Avene Thermal Spring Water'],ok:0,why:'الرؤوس السودا محتاجة Comedolytic زي الـ AHA.'},
+   {t:'Moisturizer',opts:['Vaseline Petroleum Jelly','La Roche-Posay Hyalu B5 Serum','Bioderma Atoderm Intensive Baume','مفيش داعي لمرطب'],ok:1,why:'البشرة الدهنية محتاجة ترطيب خفيف (Humectant). الـ Occlusive تقيل ممكن يسد المسام.'},
+   {t:'Sunscreen',opts:['La Roche-Posay Anthelios SPF50 Fluid','مفيش داعي','Garnier Fast Bright Vitamin C Serum','Avene Thermal Spring Water'],ok:0,why:'الواقي كل يوم أساسي، خصوصًا مع الـ AHA اللي بيخلي البشرة أحسس للشمس.'}]},
+ {who:'سيدة، 35 سنة',stem:'بشرة جافة وحساسة، بتحس بشد بعد الغسيل، وأحيانًا قشور.',slots:[
+   {t:'Cleanser',opts:['Benzac AC 5% Gel','Bioderma Atoderm Huile de Douche',"L'Oreal Glycolic Bright Peeling Toner",'ISIS Teen Derm Sensitive Gel'],ok:1,why:'الـ Oil cleanser بينضف من غير ما ينشف البشرة الجافة.'},
+   {t:'Moisturizer',opts:['CeraVe Moisturizing Cream','The Ordinary Lactic Acid 5% + HA','Bioderma Sebium Global','Benzac AC 5% Gel'],ok:0,why:'الـ Ceramides بتصلّح حاجز البشرة الجافة والحساسة.'},
+   {t:'Night (الأماكن الناشفة جدًا)',opts:['Bioderma Atoderm Intensive Baume',"L'Oreal Glycolic Bright Peeling Toner",'Caudalie Crushed Cabernet Scrub','The Ordinary Caffeine Solution'],ok:0,why:'الـ Occlusive بيقفل على الرطوبة بالليل.'},
+   {t:'Sunscreen',opts:['Bioderma Photoderm Max SPF50 Aquafluid','Scrub','مفيش داعي','Differin Gel'],ok:0,why:'الواقي اليومي بيحمي البشرة الحساسة من التهيج والتصبغات.'}]},
+ {who:'بنت، 26 سنة',stem:'الحبوب خفت، بس سابت بقع غامقة (Post-inflammatory hyperpigmentation).',slots:[
+   {t:'Morning serum',opts:['The Ordinary Niacinamide','Benzac AC 5% Gel','Vaseline Petroleum Jelly','Caudalie Crushed Cabernet Scrub'],ok:0,why:'الـ Niacinamide بيمنع انتقال الميلانين ومناسب للاستخدام اليومي.'},
+   {t:'Night (2-3 مرات في الأسبوع)',opts:['The Ordinary Lactic Acid 5% + HA','Scrub كل يوم','Bioderma Atoderm Huile de Douche','Avene Thermal Spring Water'],ok:0,why:'الـ Lactic acid بيقشّر بلطف وبيساعد البقع تفتح.'},
+   {t:'Sunscreen',opts:['ISIS UVEBlock SPF50 Body Lotion','مفيش داعي لو مش هتخرج','Avene Thermal Spring Water','The Ordinary Caffeine Solution'],ok:0,why:'من غير واقي البقع هتغمق أكتر، وده أهم منتج في الروتين.'}]},
+ {who:'سيدة، 45 سنة',stem:'أول مرة تهتم بالتجاعيد، ومش حامل ولا بترضع.',slots:[
+   {t:'Morning antioxidant',opts:['Garnier Fast Bright Vitamin C Serum','La Roche-Posay Retinol B3 Serum','Benzac AC 5% Gel',"L'Oreal Glycolic Bright Peeling Toner"],ok:0,why:'الـ Vitamin C مضاد أكسدة مناسب للصبح.'},
+   {t:'Night',opts:['La Roche-Posay Retinol B3 Serum','Bioderma Sebium Global','Caudalie Crushed Cabernet Scrub','Avene Thermal Spring Water'],ok:0,why:'الـ Retinol بالليل، وتبدأ مرتين أو تلاتة في الأسبوع.'},
+   {t:'Moisturizer',opts:['CeraVe Moisturizing Cream','Benzac AC 5% Gel',"L'Oreal Glycolic Bright Peeling Toner",'Bioderma Sebium Global'],ok:0,why:'المرطب بيقلل تهيج الـ Retinol.'},
+   {t:'Sunscreen',opts:['La Roche-Posay Anthelios SPF50 Fluid','مفيش داعي','Esthederm Intensive Retinol','Vaseline Petroleum Jelly'],ok:0,why:'مع الـ Retinol الواقي الصبح إجباري.'}]}
+];
+
+/* ===== Full Prescription ليوم التنفسي والهضمي ===== */
+const PRESCRIPTIONS=[
+ {who:'موظف، 30 سنة، مفيش أمراض مزمنة',stem:'برد من يومين: رشح وانسداد في الأنف، وزوره بيوجعه، وسخونية خفيفة.',slots:[
+   {t:'للسخونية والوجع',opts:['Paracetamol (Adol / Fevadol)','Kafosed','Mucinex','Nexium'],ok:0,why:'الـ Paracetamol للسخونية والوجع.'},
+   {t:'للانسداد',opts:['Otrivin (أقصى حاجة 5-7 أيام)','Flixotide','Mucosolvan','Airfast'],ok:0,why:'الـ Decongestant الموضعي بيفتح الأنف بسرعة، بس لمدة قصيرة عشان الـ Rebound.'},
+   {t:'للزور',opts:['Strepsils','Gaviscon','Zoron','Xolair'],ok:0,why:'الـ Lozenges للزور.'},
+   {t:'إضافة مكملة',opts:['Vivamune (Beta-glucan)','Omiz','Dompy','Pentasa 500 mg'],ok:0,why:'الـ Vitamin C أو الـ Zinc كمكمل للمناعة.'}]},
+ {who:'رجل، 58 سنة، عنده ضغط',stem:'برد ومناخيره مسدودة، وبياخد علاج ضغط بانتظام.',slots:[
+   {t:'للانسداد',opts:['Aquamer (Sea water)','Lorinase-D','Rinofed','Fludrex'],ok:0,why:'الـ Pseudoephedrine بيرفع الضغط، فالـ Saline هو الأأمن.'},
+   {t:'للسخونية والوجع',opts:['Paracetamol (Adol / Fevadol)','Prof Cold & Flu','Panadol Cold & Flu','Fludrex'],ok:0,why:'Paracetamol عادي من غير Decongestant. والـ NSAIDs كمان بترفع الضغط.'},
+   {t:'نصيحة',opts:['يقيس ضغطه، ولو البرد زاد عن أسبوع يروح لدكتور','ياخد أي دوا برد عادي','يوقف دوا الضغط لحد ما يخف','ياخد Otrivin لمدة شهر'],ok:0,why:'متابعة الضغط وحدود الـ Self-care.'}]},
+ {who:'سيدة، 40 سنة',stem:'كحة فيها بلغم تقيل من 4 أيام، ومفيش ضيق نفس ولا سخونية.',slots:[
+   {t:'العلاج الأساسي',opts:['Mucosolvan (Ambroxol)','Kafosed (Dextromethorphan)','Histop','Otrivin'],ok:0,why:'البلغم التقيل محتاج Mucolytic. والـ Suppressant بيحبس البلغم.'},
+   {t:'مساعد',opts:['Propolsaft (Honey + Thyme)','Exylin','Imuran','Zoron'],ok:0,why:'الـ Demulcent بيهدّي الزور.'},
+   {t:'نصيحة',opts:['سوائل دافية كتير، ولو الكحة كمّلت 3 أسابيع تروح لدكتور','تاخد مضاد حيوي على طول','توقف الأكل','تاخد Kafosed مع Mucosolvan'],ok:0,why:'السوائل بتسيّح البلغم، والـ Red flag هي الكحة أكتر من 3 أسابيع.'}]},
+ {who:'سواق، 33 سنة',stem:'عطس ورشح وحكة في العين كل ربيع.',slots:[
+   {t:'بالبق',opts:['Telfast (Fexofenadine)','Exylin','Histop','Dizinil'],ok:0,why:'الجيل التاني مش بيعمل نعاس، ومناسب للسواق.'},
+   {t:'بخاخ',opts:['Avamys (Fluticasone furoate)','Otrivin لمدة شهر','Flixotide','Pulmicort'],ok:0,why:'الـ Nasal steroid هو الأساس في الحساسية المستمرة، ومحتاج استخدام منتظم.'},
+   {t:'مساعد',opts:['Aquamer (Sea water)','Mucinex','Gaviscon','Vominore'],ok:0,why:'غسيل الأنف بيشيل مسببات الحساسية.'}]},
+ {who:'رجل، 35 سنة',stem:'حرقان بعد الأكل وبالليل من أسبوعين، ومفيش صعوبة بلع ولا نقص وزن.',slots:[
+   {t:'راحة سريعة',opts:['Gaviscon','Omiz','Imuran','Zoron'],ok:0,why:'الـ Alginate/antacid بيريّح بسرعة.'},
+   {t:'علاج منتظم',opts:['Omiz قبل الفطار بنص ساعة','Premosan بعد الأكل','Gaviscon كل ساعة','Vominore'],ok:0,why:'الـ PPI بيتاخد قبل الأكل عشان يشتغل كويس.'},
+   {t:'نصيحة',opts:['متنامش بعد الأكل على طول وعلّي المخدة','ياكل وجبة كبيرة قبل النوم','يشرب قهوة أكتر','يبطل كل الأكل'],ok:0,why:'تعديل نمط الحياة جزء من العلاج.'}]},
+ {who:'أسرة مسافرة بالعربية',stem:'الأب عاوز حاجة لدوار الحركة ليه، وهو مش هيسوق.',slots:[
+   {t:'العلاج',opts:['Vominore (Meclizine)','Zoron','Premosan','Moxal'],ok:0,why:'مضاد الهيستامين هو اختيار دوار الحركة.'},
+   {t:'إمتى ياخده',opts:['قبل السفر بساعة تقريبًا','بعد ما يرجّع','بعد الوصول','مرة واحدة في الأسبوع'],ok:0,why:'بيتاخد قبل الحركة عشان يمنع الأعراض.'},
+   {t:'تحذير',opts:['ممكن يعمل نعاس، فمينفعش ياخده اللي هيسوق','مفيش أي أعراض جانبية','يتاخد مع Exylin','يتاخد مع Kafosed'],ok:0,why:'مضادات الهيستامين القديمة بتعمل نعاس.'}]}
+];
+
+/* ===== التحدي التالت لكل يوم: Full Prescription (أيام الأدوية) أو Routine Builder (البشرة والشعر).
+   كل حالة فيها خانات، وكل خانة ليها اختيار واحد صح (ok = رقم الاختيار الصح، من 0) ===== */
+const BUILD3=[
+ {who:'رجل، 30 سنة',stem:'إسهال مائي من امبارح، مفيش دم ولا سخونية، وبيشرب كويس.',slots:[
+   {t:'تعويض السوائل',opts:['ElectroRush','Dulcolax','Duphalac','Resolor'],ok:0,why:'تعويض السوائل والأملاح أهم خطوة في أي إسهال.'},
+   {t:'لتقليل الإسهال',opts:['Imodium','Anazol','Laxatrol','Bio-Fiber'],ok:0,why:'Loperamide للإسهال غير الميكروبي عند الكبار، ومش للأطفال الصغيرين.'},
+   {t:'إمتى يحوّل للدكتور',opts:['لو فيه دم، أو سخونية عالية، أو استمر أكتر من يومين','بعد أسبوعين','مفيش داعي أبدًا','لو حس بجوع'],ok:0,why:'دي Red flags الإسهال.'}]},
+ {who:'حامل في الشهر الخامس',stem:'إمساك من أسبوع، ومش واخدة أي مكملات.',slots:[
+   {t:'للإمساك',opts:['Duphalac','Resolor','Imodium','Anazol'],ok:0,why:'الـ Osmotic زي Lactulose آمن في الحمل.'},
+   {t:'مكمل مهم في الحمل',opts:['Folicum','Thiotacid','Glavolean','Ashwag'],ok:0,why:'الـ Folic acid أساسي في الحمل، وباقي الاختيارات مش مناسبة للحامل.'},
+   {t:'نصيحة',opts:['سوائل كتير، وألياف، وحركة','أكل قليل','قهوة كتير','ملينات منبهة كل يوم'],ok:0,why:'تعديل نمط الحياة هو الأساس.'}]},
+ {who:'موظفة، 28 سنة',stem:'مغص وانتفاخ بعد الأكل، والدكتور قال قولون عصبي (IBS).',slots:[
+   {t:'للمغص',opts:['Duspatalin','Dulcolax','Anazol','ElectroRush'],ok:0,why:'Mebeverine بيرخّي عضلات الأمعاء مباشرة.'},
+   {t:'نصيحة',opts:['تزوّد الألياف تدريجيًا، وتسجل الأكل اللي بيتعبها','تبطل تاكل خالص','تاخد مضاد حيوي','تاخد ملين كل يوم'],ok:0,why:'التدرج في الألياف ومعرفة الأكل المسبب بيقللوا الأعراض.'}]},
+ {who:'سيدة، 60 سنة',stem:'الدكتور قال عندها هشاشة عظام بسيطة، وفيتامين D واطي.',slots:[
+   {t:'الكالسيوم',opts:['Osteocare','Feroglobin','Effervit-C','Glavolean'],ok:0,why:'Osteocare فيه Calcium و Vitamin D.'},
+   {t:'فيتامين D',opts:['Vidrop','Thiotacid','Ultra Cranberry','Neurobion'],ok:0,why:'Vitamin D3 بالجرعة اللي الدكتور يحددها.'},
+   {t:'لو بتاخد حديد كمان',opts:['تفصل بين الحديد والكالسيوم ساعتين على الأقل','تاخدهم مع بعض','تبطل الحديد','تاخدهم مع الشاي'],ok:0,why:'الكالسيوم بيقلل امتصاص الحديد.'}]},
+ {who:'مريض سكر، 55 سنة',stem:'تنميل وحرقان في القدمين، والدكتور شخصه اعتلال أعصاب.',slots:[
+   {t:'فيتامينات الأعصاب',opts:['Neurobion','Effervit-C','Centrum with Lutein','Evit 400 mg'],ok:0,why:'B1 و B6 و B12 بيدعموا الأعصاب.'},
+   {t:'مضاد أكسدة للأعصاب',opts:['Thiotacid','Glavolean','Ashwag','JP Omega-3'],ok:0,why:'Alpha-lipoic acid بيتستخدم في اعتلال الأعصاب السكري.'},
+   {t:'الأهم',opts:['ضبط السكر ومتابعة الدكتور وفحص القدم كل يوم','المكملات بس','يوقف علاج السكر','مفيش حاجة'],ok:0,why:'التحكم في السكر هو العلاج الأساسي.'}]}
+];
+const BUILD4=[
+ {who:'موظفة، 26 سنة',stem:'عينيها ناشفة وبتحرقها آخر اليوم من الشاشة، ومفيش احمرار شديد ولا ألم.',slots:[
+   {t:'العلاج',opts:['Systane Ultra UD','Xalatan','Vigamox','Optipred'],ok:0,why:'مرطب العين (Artificial tears) هو الحل لجفاف العين.'},
+   {t:'نصيحة',opts:['قاعدة 20-20-20: كل 20 دقيقة تبص لحاجة بعيدة 20 ثانية','تقرب الشاشة','تقفل عينيها بالساعات','تستخدم قطرة مضاد حيوي'],ok:0,why:'بتقلل إجهاد العين.'}]},
+ {who:'شاب، 22 سنة',stem:'حكة واحمرار ودموع في العينين الاتنين كل ربيع، ومفيش إفرازات صديدية.',slots:[
+   {t:'العلاج الأساسي',opts:['Patanol','Tobradex Eye Drops','Optipred','Cosopt'],ok:0,why:'Olopatadine مضاد هيستامين ومثبت للخلايا البدينة للحساسية.'},
+   {t:'لو الاحمرار مضايقه في مناسبة',opts:['Lumify لفترة قصيرة','Xalatan','Nevanac','Vigamox'],ok:0,why:'Decongestant خفيف لفترة قصيرة بس.'},
+   {t:'إمتى يحوّل',opts:['لو فيه ألم، أو زغللة، أو حساسية للضوء','لو العين احمرت يوم','لو عطس','مفيش داعي'],ok:0,why:'دي Red flags العين.'}]},
+ {who:'رجل، 45 سنة',stem:'حاسس إن ودنه مسدودة من شمع، ومفيش ألم ولا إفرازات.',slots:[
+   {t:'العلاج',opts:['Dewax Ear Drops','Neodex Eye & Ear Drops','Otocol Ear Drops','Vigamox'],ok:0,why:'الـ Cerumenolytic بيليّن الشمع.'},
+   {t:'إمتى ممنوع',opts:['لو فيه ثقب في الطبلة أو ألم أو إفرازات','لو الشمع كتير','بعد الحمام','بالليل'],ok:0,why:'وقتها لازم دكتور أنف وأذن.'}]},
+ {who:'مريض جلوكوما، 65 سنة',stem:'أول مرة يصرف Xalatan.',slots:[
+   {t:'إمتى يستخدمه',opts:['نقطة واحدة بالليل كل يوم','كل ساعتين','مرة في الأسبوع','وقت ما يحس بألم'],ok:0,why:'الـ Prostaglandin analogues بتتاخد مرة بالليل.'},
+   {t:'التخزين',opts:['في التلاجة قبل الفتح، وبعد الفتح في درجة حرارة الغرفة لحد 4 أسابيع','في الشمس','في الفريزر','مفيش شروط'],ok:0,why:'ده المكتوب في نشرة Latanoprost.'},
+   {t:'طريقة التقطير',opts:['يضغط على الركن الداخلي للعين دقيقة بعد النقطة','يحط 3 نقط','يمسح العين على طول','يرمش جامد'],ok:0,why:'الضغط بيقلل امتصاص الدوا في الجسم.'}]},
+ {who:'سيدة، 35 سنة',stem:'بدأت Cipralex من أسبوع، وبتقول مفيش تحسن وعاوزة توقفه.',slots:[
+   {t:'تقولها إيه',opts:['المفعول بياخد من أسبوعين لـ 4، ومتوقفهوش لوحدها وترجع لدكتورها','توقفه فورًا','تضاعف الجرعة','تغيره لـ Wellbutrin'],ok:0,why:'وقف الـ SSRI فجأة ممكن يعمل أعراض انسحاب.'},
+   {t:'عرض جانبي شائع في الأول',opts:['غثيان أو اضطراب معدة','تساقط الشعر','زيادة البصر','حكة في الودن'],ok:0,why:'الأعراض دي غالبًا بتخف بعد كام يوم.'}]}
+];
+const BUILD5=[
+ {who:'رجل، 70 سنة، على Eliquis',stem:'عنده صداع وعاوز مسكن.',slots:[
+   {t:'المسكن',opts:['Adol','Proxen','Aspirin Protect','Celebrex'],ok:0,why:'الـ Paracetamol هو الأأمن مع مضادات التجلط.'},
+   {t:'نصيحة',opts:['يبعد عن المسكنات اللي من نوع NSAIDs ويراقب أي نزيف','ياخد أي مسكن','يوقف Eliquis يومين','ياخد مسكنين مع بعض'],ok:0,why:'الـ NSAIDs بتزود خطر النزيف.'}]},
+ {who:'سيدة، 60 سنة، ضغط على Concor',stem:'ألم في الركبة من يومين.',slots:[
+   {t:'المسكن',opts:['Adol','Proxen','Celebrex','Aspirin Protect'],ok:0,why:'الـ NSAIDs ممكن ترفع الضغط وتقلل مفعول علاجه.'},
+   {t:'نصيحة',opts:['تقيس ضغطها بانتظام، ولو الألم استمر تروح لدكتور','توقف Concor','تاخد NSAID أسبوعين','ملهاش لازمة'],ok:0,why:'متابعة الضغط وحدود الـ Self-care.'}]},
+ {who:'رجل، 50 سنة',stem:'أول مرة يصرف Crestor.',slots:[
+   {t:'إمتى ياخده',opts:['مرة يوميًا في نفس الميعاد','3 مرات يوميًا','مرة في الأسبوع','لما يحس بتعب'],ok:0,why:'Rosuvastatin بيتاخد مرة يوميًا وفي أي وقت.'},
+   {t:'يبلغ الدكتور فورًا لو',opts:['حس بألم أو ضعف في العضلات من غير سبب','نام كويس','زاد وزنه','عطس'],ok:0,why:'الـ Myopathy عرض جانبي مهم للـ Statins.'}]},
+ {who:'رجل، 62 سنة، ذبحة صدرية على Nitroderm',stem:'بيسأل عن دوا للانتصاب (Sildenafil).',slots:[
+   {t:'الرد',opts:['ممنوع تمامًا مع النترات، خطر هبوط شديد في الضغط','عادي بنص الجرعة','ياخده الصبح والنترات بالليل','مفيش مشكلة'],ok:0,why:'النترات مع PDE5 inhibitors خطر على الحياة.'},
+   {t:'استخدام اللزقة',opts:['يشيلها 8 لـ 12 ساعة يوميًا عشان الجسم ميتعودش','يسيبها على طول','يحط اتنين','يقصها نصين'],ok:0,why:'الـ Patch-free interval بيمنع الـ Tolerance.'}]},
+ {who:'مريض على Coufatex (Warfarin)',stem:'عاوز يبدأ مكملات ومسكن لألم الضهر.',slots:[
+   {t:'المسكن',opts:['Adol','Proxen','Aspirin Protect','Celebrex'],ok:0,why:'الـ Paracetamol بجرعات عادية هو الأأمن.'},
+   {t:'المكملات',opts:['ميبدأش أي مكمل غير لما يسأل الدكتور ويتابع الـ INR','ياخد اللي هو عاوزه','يبطل Coufatex','ياخد Omega-3 بجرعة عالية'],ok:0,why:'مكملات كتير بتأثر على الـ INR.'}]}
+];
+const BUILD6=[
+ {who:'مريض سكر جديد',stem:'أول مرة يصرف Glucophage 500.',slots:[
+   {t:'إمتى ياخده',opts:['مع الأكل أو بعده','على الريق','قبل النوم من غير أكل','مرة في الأسبوع'],ok:0,why:'مع الأكل بيقلل اضطراب المعدة.'},
+   {t:'عرض جانبي شائع في الأول',opts:['اضطراب معدة أو إسهال بيخف مع الوقت','هبوط سكر شديد','تساقط شعر','زغللة'],ok:0,why:'وده سبب إن الجرعة بتبدأ قليلة.'}]},
+ {who:'مريضة بتستخدم Lantus',stem:'بتسأل إزاي تخزن الأقلام.',slots:[
+   {t:'الأقلام اللي لسه متفتحتش',opts:['في التلاجة من 2 لـ 8 درجات، ومتتجمدش','في الفريزر','في العربية','جنب الشباك'],ok:0,why:'التجميد بيبوّظ الإنسولين.'},
+   {t:'القلم المفتوح',opts:['في درجة حرارة الغرفة لحد 28 يوم','في التلاجة سنة','يترمي كل يوم','في الشمس'],ok:0,why:'ده المكتوب في نشرة Lantus.'}]},
+ {who:'مريض على Amaryl',stem:'جاي الصيدلية بيعرق ومرعوش، وقاس السكر 60.',slots:[
+   {t:'تعمل إيه فورًا',opts:['15 جرام سكر سريع (عصير أو جلوكوز) ويقيس تاني بعد 15 دقيقة','حقنة إنسولين','ينام','ياخد Amaryl تاني'],ok:0,why:'قاعدة الـ 15/15 لهبوط السكر.'},
+   {t:'السبب الأشهر',opts:['فوّت وجبة أو مجهود زيادة','شرب مية','نوم كويس','أكل خضار'],ok:0,why:'الـ Sulfonylureas بتعمل هبوط لو الأكل قليل.'}]},
+ {who:'سيدة على Forxiga',stem:'أول مرة تصرفه.',slots:[
+   {t:'نصيحة مهمة',opts:['تهتم بالنظافة الشخصية وتشرب مية كفاية','تقلل المية','تاخده مرتين','توقف الأكل'],ok:0,why:'الـ SGLT-2 بتزود خطر الالتهابات التناسلية والجفاف.'},
+   {t:'لو عندها ترجيع أو إسهال شديد',opts:['تكلم دكتورها، ممكن يوقفه مؤقتًا','تضاعف الجرعة','تكمل عادي','تاخد Glucophage زيادة'],ok:0,why:'خطر الجفاف والـ Ketoacidosis.'}]},
+ {who:'مريض بدأ Ozempic',stem:'بيسأل عن الاستخدام.',slots:[
+   {t:'الجرعة',opts:['مرة في الأسبوع في نفس اليوم','كل يوم','قبل كل وجبة','مرة في الشهر'],ok:0,why:'Semaglutide الحقن مرة أسبوعيًا.'},
+   {t:'لو جاله غثيان',opts:['وجبات أصغر، ويبطل يكمل أكل لما يشبع','يوقفه فورًا','ياخد جرعتين','ياكل دهون أكتر'],ok:0,why:'الغثيان شائع في الأول وبيخف.'}]},
+ {who:'سيدة بتصرف NuvaRing',stem:'أول مرة تستخدمه.',slots:[
+   {t:'طريقة الاستخدام',opts:['3 أسابيع جوه، وبعدين أسبوع راحة','يوم بيوم','تشيله كل يوم بالليل','شهرين متواصل'],ok:0,why:'دي الدورة المعتادة للحلقة.'},
+   {t:'التخزين في الصيدلية',opts:['في التلاجة قبل الصرف','على الرف في الشمس','في الفريزر','مفيش شروط'],ok:0,why:'مكتوب على العبوة إنها تتحفظ في التلاجة قبل الصرف.'}]}
+];
+const BUILD7=[
+ {who:'شاب، 25 سنة',stem:'فروة دهنية وقشرة لزقة وحكة.',slots:[
+   {t:'الشامبو',opts:['Anivagene Anti-dandruff Shampoo','Keratin Therapy Shampoo','Dove 2in1 Daily Care','Pantene Smooth & Silky Conditioner'],ok:0,why:'شامبو القشرة الدهنية.'},
+   {t:'طريقة الاستخدام',opts:['يسيبه على الفروة 3 لـ 5 دقايق، ومرتين لـ 3 في الأسبوع','يشطفه على طول','مرة في الشهر','على أطراف الشعر بس'],ok:0,why:'المادة الفعالة محتاجة وقت على الفروة.'}]},
+ {who:'بنت، 24 سنة',stem:'شعر جاف ومتقصف من الصبغة والسشوار.',slots:[
+   {t:'الشامبو',opts:['Keratin Therapy Shampoo','Royal Placenta Hair Shampoo','Anivagene Anti-dandruff Shampoo','Revivexil Hair Growth Shampoo'],ok:0,why:'شامبو من غير Sulfate للشعر الجاف والمصبوغ.'},
+   {t:'ترطيب عميق',opts:['Mielle Rosemary Mint Hair Mask مرة في الأسبوع','Regaine 5% Solution','Vichy Dercos Anti-dandruff','مفيش داعي'],ok:0,why:'الماسك ترطيب عميق.'},
+   {t:'قبل السشوار',opts:['Elvive Dream Long Frizz Killer Serum','Clarifying shampoo','Maxon Anti-dandruff Shampoo','Perfectil'],ok:0,why:'السيرم بيحمي وبيدي لمعة.'}]},
+ {who:'رجل، 32 سنة',stem:'تساقط وخفة في مقدمة الرأس والقمة من سنتين، وأبوه أصلع.',slots:[
+   {t:'العلاج الموضعي',opts:['Regaine 5% Solution','Mielle Rosemary Mint Hair Mask','Eva Hair Cream Aloe Vera','Sunsilk Hair Cream'],ok:0,why:'Minoxidil للصلع الوراثي.'},
+   {t:'شامبو مساعد',opts:['Capixy Hair Loss Shampoo','Dove 2in1 Daily Care','Herbal Essences Golden Moringa','Royal Placenta Hair Shampoo'],ok:0,why:'شامبو مضاد للتساقط كعامل مساعد.'},
+   {t:'نصيحة',opts:['النتيجة بتبان بعد 3 لـ 4 شهور، وممكن يزيد التساقط في الأول','النتيجة في أسبوع','يوقفه لو ماشافش نتيجة في يومين','مفيش أعراض'],ok:0,why:'عشان ميوقفش بدري.'}]},
+ {who:'سيدة، 30 سنة',stem:'تساقط شعر كتير بعد ما خفّت من حمى من شهرين.',slots:[
+   {t:'مكمل بالبق',opts:['Perfectil','Thiotacid','Glavolean','Regaine 5% Solution'],ok:0,why:'دعم بالفيتامينات والمعادن.'},
+   {t:'موضعي',opts:['Revivexil Ampoules','Maxon Anti-dandruff Shampoo','Lee Stafford Coco Loco Spritz','Dabur Vatika Frizz Control Serum'],ok:0,why:'أمبولات للتساقط.'},
+   {t:'إمتى تحوّلها',opts:['لو التساقط استمر أكتر من 6 شهور، أو عندها أعراض أنيميا أو غدة','بعد أسبوع','مفيش داعي','لو الشعر طال'],ok:0,why:'محتاجة تحاليل حديد وغدة.'}]},
+ {who:'بنت، 19 سنة',stem:'شعر كيرلي بيتعقد وفيه هيشان.',slots:[
+   {t:'بعد الشامبو',opts:['Lee Stafford Coco Loco Spritz','Vichy Dercos Anti-dandruff','Regaine 5% Solution','Capixy Hair Loss Shampoo'],ok:0,why:'سبراي لفك التشابك.'},
+   {t:'كريم يومي',opts:['Eva Hair Cream Aloe Vera','Anivagene Anti-dandruff Shampoo','Perfectil','Revivexil Ampoules'],ok:0,why:'Leave-in cream للترطيب والتصفيف.'},
+   {t:'للهيشان',opts:['Dabur Vatika Frizz Control Serum','Royal Placenta Hair Shampoo','Maxon Anti-dandruff Shampoo','Mothernest Biotin + Zinc Candy'],ok:0,why:'السيرم بيقلل الهيشان.'}]}
+];
+
+
+/* ===== أيام الفرع السبعة حسب جدول البرنامج ===== */
+const pg=(pre,n)=>[...Array(n)].map((_,i)=>pre+'-'+String(i+1).padStart(2,'0'));
+const DAYS=[
+ {id:1,code:'SKIN',t:'العناية بالبشرة',sub:'Daily care · Cosmeceuticals',files:['Skin_Care_Part_1.pdf','Skin_Care_Part_2.pdf'],pages:[...pg('s1',12),...pg('s2',11)],online:'Selling Opportunities in Skin Care'},
+ {id:2,code:'RESP · GIT',t:'التنفسي والهضمي (1)',sub:'Respiratory · GIT Part 1',files:['Respiratory_Part_1.pdf','Respiratory_Part_2.pdf','GIT_Part_1.pdf'],pages:[...pg('r1',9),...pg('r2',9),...pg('g1',10)],online:'Community Pharmacy Practice in U.R. Disorders و GIT Disorders'},
+ {id:3,code:'GIT · NUTRA',t:'الهضمي (2) والمكملات',sub:'GIT Part 2 · Nutraceuticals',files:['GIT_Part_2.pdf','Nutraceuticals.pdf'],pages:[...pg('g2',9),...pg('nu',12)],online:'Community Pharmacy Practice in Nutritional Supplements'},
+ {id:4,code:'EYE · CNS',t:'العين والأذن والجهاز العصبي',sub:'Eye & Ear · CNS',files:['Eye_Ear_Part_1.pdf','Eye_Ear_Part_2.pdf','CNS.pdf'],pages:[...pg('e1',12),...pg('e2',11),...pg('cn',13)],online:'Community Pharmacy Practice in Eye & Ear و CNS Disorders'},
+ {id:5,code:'CVS · PAIN',t:'القلب والمسكنات والدم',sub:'CVS · Pain management · Blood',files:['CVS_Part_1.pdf','CVS_Part_2.pdf','Analgesics_Muscle_Relaxants_Blood.pdf'],pages:[...pg('c1',14),...pg('c2',11),...pg('an',15)],online:'Community Pharmacy Practice in CVS Disorders'},
+ {id:6,code:'DM · ENDO',t:'السكر والغدد',sub:'Antidiabetics · Endocrine',files:['Diabetes_Part_1.pdf','Diabetes_Part_2.pdf','Hormones.pdf'],pages:[...pg('d1',8),...pg('d2',7),...pg('ho',12)],online:'Community Pharmacy Practice in Antidiabetics'},
+ {id:7,code:'HAIR',t:'العناية بالشعر',sub:'Daily care · Dandruff · Hair loss',files:['Hair_Care_Part_1.pdf','Hair_Care_Part_2.pdf'],pages:[...pg('h1',9),...pg('h2',7)],online:'Selling Opportunities in Hair care products'}
+];
+const CAT_AR={};
+const RX={g:'build',t:'Full Prescription',d:'عملاء على الكاونتر. اكتب لكل واحد الروشتة الكاملة: العلاج والمساعد والنصيحة.'};
+const RT={g:'build',t:'Routine Builder',d:'شخصيات مختلفة. ابني لكل واحدة روتين كامل خطوة بخطوة.'};
+const MATCH=l=>({g:'match',t:'Match Rush',d:`وصّل كل منتج بـ${l} بتاعه قبل ما الوقت يخلص.`});
+const SORT={g:'sort',t:'Tree Builder',d:'رجّع كل منتج لفرعه الصح في الشجرة.'};
+const DAYCFG={
+ 1:{mode:'cosmetic',matchField:'a',matchLabel:'المكوّن الأساسي',intro:'تنظيف، ترطيب، حماية من الشمس، وحب شباب وتصبغات وتجاعيد.',build:{...RT,data:ROUTINES}},
+ 2:{mode:'drug',matchField:'a',matchLabel:'المادة الفعالة',intro:'ربو، كحة، حساسية، أنف، برد، وحموضة وقيء ودوار حركة والتهابات القولون.',build:{...RX,data:PRESCRIPTIONS}},
+ 3:{mode:'drug',matchField:'a',matchLabel:'المادة الفعالة',intro:'إسهال، إمساك، مغص، وفيتامينات ومعادن ومكملات.',build:{...RX,data:BUILD3}},
+ 4:{mode:'drug',matchField:'a',matchLabel:'المادة الفعالة',intro:'قطرات العين والأذن، وأدوية الباركنسون والزهايمر والاكتئاب والذهان والصرع.',build:{...RX,data:BUILD4}},
+ 5:{mode:'drug',matchField:'a',matchLabel:'المادة الفعالة',intro:'الضغط والقلب والدهون، والمسكنات وباسطات العضلات، ومضادات التجلط.',build:{...RX,data:BUILD5}},
+ 6:{mode:'drug',matchField:'a',matchLabel:'المادة الفعالة',intro:'أقراص السكر والإنسولين والحقن، والهرمونات.',build:{...RX,data:BUILD6}},
+ 7:{mode:'cosmetic',matchField:'sub',matchLabel:'نوعه',intro:'شامبو، بلسم، تصفيف، وقشرة وتساقط.',build:{...RT,data:BUILD7}}
+};
+const DAYDATA={};
+for(const d of DAYS){const c=DAYCFG[d.id];if(!c||!PRODUCTS[d.id])continue;d.ready=true;
+  DAYDATA[d.id]={...c,items:PRODUCTS[d.id].map(([pic,b,cat,sub,a,ck])=>({pic,b,cat,sub,a,ck})),quizzes:[MATCH(c.matchLabel),SORT,c.build]};}
+const FIELDS={
+ drug:[['ha','المادة الفعالة','ltr','Active ingredient(s)'],['hu','الاستخدامات','auto',''],['hs','التركيزات والأشكال المتاحة','auto','مثال: 100 mcg inhaler · 2 mg/5 ml syrup'],['hd','الجرعة المعتادة للكبار','auto','من النشرة']],
+ cosmetic:[['ha','المكونات الأساسية','ltr','Key ingredients من الليبل'],['hu','الاستخدام ونوع البشرة أو الشعر المناسب','auto',''],['hs','الأحجام المتاحة','auto','مثال: 50 ml · 200 ml'],['hd','طريقة الاستخدام','auto','الصبح ولا بالليل؟ كام مرة؟']]
+};
+
+/* ================= STATE ================= */
+const KEY='rehla-v4';
+const DAY_BADGES={1:'Skin Expert',2:'Resp & GIT Expert',3:'GIT & Nutra Expert',4:'Eye & CNS Expert',5:'CVS & Pain Expert',6:'Diabetes & Endo Expert',7:'Hair Expert'};
+Object.entries(DAY_BADGES).forEach(([d,t])=>BADGES['day'+d]={t,d:'خلّص يوم الفرع '+d});
+let S=load();
+if(S.user&&!S.user.email){S.user=null;save()}
+if(!CONFIG.PREVIEW&&S.preview){S.preview=false;save()}
+function def(){return{user:null,xp:0,games:{},data:{},badges:[],preview:false,outbox:[]}}
+function load(){try{const r=localStorage.getItem(KEY);if(r)return Object.assign(def(),JSON.parse(r))}catch(e){}return def()}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(S))}
+  catch(e){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e2){}}
+}
+function level(){let L=LEVELS[0];for(const l of LEVELS)if(S.xp>=l.min)L=l;return L}
+function levelOf(xp){let L=LEVELS[0];for(const l of LEVELS)if(xp>=l.min)L=l;return L.n}
+function nextLevel(){return LEVELS.find(l=>l.min>S.xp)}
+function renderXP(){
+  const L=level(),N=nextLevel();
+  $('#lvl').textContent=L.n;$('#xpnum').textContent=`${S.xp} XP`;
+  $('#xpfill').style.width=Math.min(100,N?((S.xp-L.min)/(N.min-L.min))*100:100)+'%';
+  renderSync();
+}
+function award(id){if(!S.badges.includes(id)){S.badges.push(id);save();setTimeout(()=>toast(`Badge جديد: ${BADGES[id].t}`),1500);send({type:'badge',day:0,item:id,xp:0})}}
+
+/* ================= SYNC (Google Sheets via Apps Script) ================= */
+let syncing=false;
+function renderSync(){
+  const el=$('#sync');if(!el)return;
+  if(!CONFIG.SHEETS_URL){el.className='sync demo';el.textContent='وضع تجريبي';return}
+  const n=S.outbox.length;
+  el.className='sync '+(n?'wait':'ok');el.textContent=n?`${n} في الانتظار`:'متزامن';
+}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function send(ev){
+  if(!S.user||!CONFIG.SHEETS_URL)return;
+  S.outbox.push(Object.assign({eid:uid(),ts:new Date().toISOString(),key:CONFIG.SHARED_KEY,user:S.user,score:'',data:{},photos:[]},ev));
+  save();renderSync();flush();
+}
+async function flush(){
+  if(syncing||!CONFIG.SHEETS_URL||!S.outbox.length||!navigator.onLine)return;
+  syncing=true;
+  try{
+    while(S.outbox.length){
+      const r=await fetch(CONFIG.SHEETS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(S.outbox[0])});
+      const j=await r.json().catch(()=>({ok:false}));
+      if(!j.ok&&!j.duplicate){if(j.error==='bad key')toast('مفتاح الربط غلط. راجع SHARED_KEY');break}
+      S.outbox.shift();save();renderSync();
+    }
+  }catch(e){}
+  syncing=false;renderSync();
+}
+window.addEventListener('online',flush);
+setInterval(flush,30000);
+function addXP(n,msg,ev){
+  if(n>0){S.xp+=n;save();renderXP();toast(`+${n} XP · ${msg}`)}
+  if(ev)send(Object.assign({xp:Math.max(0,n)},ev));
+}
+
+/* ================= HELPERS ================= */
+function $(s){return document.querySelector(s)}
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const lt=s=>`<span class="lt">${esc(s)}</span>`;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+let toastT;
+function toast(m){const r=$('#toastroot');r.innerHTML=`<div class="toast" role="status">${esc(m)}</div>`;clearTimeout(toastT);toastT=setTimeout(()=>r.innerHTML='',2600)}
+function go(h){location.hash=h}
+const byPic=(day,pic)=>DAYDATA[day].items.find(x=>x.pic===pic)||{pic,b:'',a:'',ck:'',cat:'',sub:''};
+const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9 ]/g,' ');
+const STOP=['extract','leaf','alcohol','sea','water','saline','propionate','furoate','sodium','vitamin','hydroxide','pegol','acid','2','4','rx','aha','retinoid'];
+/* كل مكوّن لازم يتكتب. "A / B" معناها إن أي اسم من الاتنين مقبول */
+function activeOK(expected,given){
+  const g=norm(given);
+  const key=p=>{const ws=norm(p).trim().split(/\s+/);return ws.find(w=>w.length>2&&!STOP.includes(w))||ws.find(w=>w.length>1)||ws[0]};
+  return expected.split('+').every(part=>part.split('/').some(alt=>g.includes(key(alt).slice(0,5))));
+}
+const todayStr=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const arDate=s=>{try{return new Date(s+'T00:00:00').toLocaleDateString('ar-SA-u-ca-gregory-nu-latn',{weekday:'long',day:'numeric',month:'long'})}catch(e){return s}};
+const imgFallback=n=>`this.onerror=null;this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',innerHTML:'<b>${n}</b><span>صورة المنتج</span>'}))`;
+
+/* ===== منطق الأيام ===== */
+const products=day=>(PRODUCTS[day]||[]);
+const dataDone=day=>products(day).filter(([n])=>S.data[n]&&S.data[n].sent).length;
+const dataComplete=day=>products(day).length>0&&dataDone(day)===products(day).length;
+const quizKey=(day,g)=>`d${day}-${g}`;
+function dayDone(id){const dd=DAYDATA[id];return !!dd&&dataComplete(id)&&dd.quizzes.every(q=>S.games[quizKey(id,q.g)]!==undefined)}
+/* اليوم بيتفتح تلقائيًا لما ييجي تاريخه */
+function dayOpen(id){if(S.preview)return true;const d=CONFIG.DAY_DATES[id];return !d||todayStr()>=d}
+function needUser(){if(S.user)return false;toast('سجّل بياناتك الأول');go('home');setTimeout(()=>{const n=$('#rname');n&&n.focus()},300);return true}
+function checkDayBadges(day){
+  if(dataComplete(day))award('collector');
+  if(dayDone(day)){award('day'+day);if(todayStr()===CONFIG.DAY_DATES[day])award('streak')}
+}
+
+/* ================= VIEWS ================= */
+function viewHome(){
+  const u=S.user;
+  $('#app').innerHTML=`
+  <section class="hero">
+    <span class="eyebrow">برنامج تأهيل الصيادلة · Talent Management</span>
+    <h1>أهلًا بيك${u?`، ${esc(u.name.split(' ')[0])}`:''}.<br>رحلتك الحقيقية <em>بتبدأ من الرف</em>.</h1>
+    <p class="lead">في برنامج الـ Onboarding عندك 7 أيام في الفرع، بينها محاضرات أونلاين وكورسات مسجلة. كل يوم فرع بيتفتح تلقائيًا في تاريخه.</p>
+    <form class="reg" id="regf" novalidate>
+      <h2>${u?'بياناتك':'سجّل عشان تبدأ'}</h2>
+      <div class="g2">
+        <div class="fld"><label for="rname">الاسم</label><input type="text" id="rname" value="${esc(u?u.name:'')}" autocomplete="name"></div>
+        <div class="fld"><label for="remail">الإيميل</label><input type="email" id="remail" dir="ltr" value="${esc(u?u.email:'')}" autocomplete="email" placeholder="name@unitedpharmacy.sa"></div>
+        <div class="fld" style="grid-column:1/-1"><label for="rbranch">الفرع</label><input type="text" id="rbranch" value="${esc(u?u.branch:'')}" placeholder="مثال: الرياض · العليا"></div>
+      </div>
+      <div id="regerr"></div>
+      <div class="ok"><button class="btn" type="submit">${u?'حدّث البيانات':'سجّل وابدأ'}</button>${u?'<span class="chip ok">مسجّل</span>':''}</div>
+    </form>
+  </section>
+
+  <section class="blk">
+    <h2>كل يوم فرع ماشي في مرحلتين</h2>
+    <ol class="flow">
+      <li><span class="fk">المرحلة الأولى</span><h3>جمع بيانات المنتجات</h3>
+        <p class="muted">هتظهرلك صورة كل منتج بس. لاقيه في الفرع واقرا العلبة والنشرة، واكتب: المادة الفعالة، والاستخدامات، والتركيزات المتاحة، والجرعة. لما تكمّل كل المنتجات، المرحلة التانية بتتفتح.</p>
+        <span class="chip">${CONFIG.XP_PER_PRODUCT} XP لكل منتج + ${CONFIG.XP_ACTIVE_BONUS} لو المادة الفعالة صح</span></li>
+      <li class="hot"><span class="fk">المرحلة التانية</span><h3>التحديات</h3>
+        <p>3 ألعاب: Match Rush، و Tree Builder، و Full Prescription أو Routine Builder. دي عليها أكبر نقط في الترتيب.</p>
+        <span class="chip">لحد ${CONFIG.XP_QUIZ_MAX} XP لكل لعبة</span></li>
+    </ol>
+  </section>
+
+  <section class="blk">
+    <h2>النقط والمستويات</h2>
+    <div class="levels">${LEVELS.map(l=>`<div><b>${l.n}</b><span>${l.ar} · من ${l.min} XP</span></div>`).join('')}</div>
+  </section>
+
+  <div class="cta"><button class="btn orange" data-go="map">ابدأ رحلتك</button><button class="btn ghost" data-go="board">شوف الترتيب</button></div>`;
+  $('#regf').onsubmit=e=>{
+    e.preventDefault();
+    const u={name:$('#rname').value.trim(),email:$('#remail').value.trim().toLowerCase(),branch:$('#rbranch').value.trim()};
+    let err='';
+    if(!u.name||!u.email||!u.branch)err='اكتب الاسم والإيميل والفرع.';
+    else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(u.email))err='الإيميل مكتوب غلط. اكتبه بالشكل ده: name@unitedpharmacy.sa';
+    if(err){$('#regerr').innerHTML=`<div class="fb no"><span>${esc(err)}</span></div>`;return}
+    const first=!S.user;S.user=u;save();send({type:'register',day:0,item:'profile',xp:0,data:u});
+    toast(first?'اتسجلت. يلا نبدأ':'اتحدّثت بياناتك');
+    if(first)go('map');else viewHome();
+  };
+}
+
+function viewMap(){
+  const done=DAYS.filter(d=>dayDone(d.id)).length;
+  $('#app').innerHTML=`
+  <section class="mapintro">
+    <span class="eyebrow">خريطة الرحلة · 7 أيام فرع</span>
+    <h1>${S.user?esc(S.user.name.split(' ')[0])+'، ':''}خلّصت ${done} من 7 أيام</h1>
+    <p class="muted">كل يوم فرع بيتفتح تلقائيًا في تاريخه. وبين أيام الفرع محاضرات أونلاين وكورسات مسجلة.</p>
+    <div class="badges">${Object.entries(BADGES).map(([k,b])=>`<span class="badge ${S.badges.includes(k)?'on':''}" title="${esc(b.d)}">${ICON.star}${esc(b.t)}</span>`).join('')}</div>
+  </section>
+  <div class="aisle">
+    ${DAYS.map(d=>{const op=dayOpen(d.id),dn=dayDone(d.id),st=dn?'done':(op?'open':'locked');
+      const lab=dn?'خلّصته':(op?(d.ready?(dataComplete(d.id)?'التحديات متاحة':`البيانات ${dataDone(d.id)}/${products(d.id).length}`):'قيد الإعداد'):'بيتفتح '+arDate(CONFIG.DAY_DATES[d.id]));
+      return `<button class="tag ${st}" ${op?`data-go="day-${d.id}"`:'aria-disabled="true"'}>
+        <div class="top"><span class="num">${d.id}</span><span class="code">${d.code}</span></div>
+        <h3>${esc(d.t)}</h3><span class="mini">${esc(d.sub)}</span>
+        <span class="st ${st==='open'&&!d.ready?'soon':st}">${lab}</span></button>`}).join('')}
+  </div>
+  ${CONFIG.PREVIEW?`<label class="previewtoggle"><input type="checkbox" id="pv" ${S.preview?'checked':''}> وضع المعاينة لفريق التدريب: افتح كل الأيام، واعرض أسماء المنتجات، وافتح التحديات من غير ما تكمّل البيانات</label>`:''}`;
+  if(CONFIG.PREVIEW)$('#pv').onchange=e=>{S.preview=e.target.checked;save();viewMap()};
+}
+
+function filesBlock(d){
+  if(!d.files.length)return'';
+  return `<div class="dl">${d.files.map(f=>CONFIG.DOWNLOADS
+    ?`<a class="btn ghost sm" href="files/${f}" download>تحميل ${esc(f.replace(/_/g,' ').replace('.pdf',''))}</a>`
+    :`<button class="btn ghost sm" disabled>تحميل ${esc(f.replace(/_/g,' ').replace('.pdf',''))}</button>`).join('')}</div>`;
+}
+const onlineNote=d=>d.online?`<p class="note">بعد اليوم ده: <span class="lt">${esc(d.online)}</span></p>`:'';
+
+function viewDay(id){
+  const d=DAYS.find(x=>x.id===id);
+  if(!d){go('map');return}
+  if(!dayOpen(id)){toast('اليوم ده بيتفتح '+arDate(CONFIG.DAY_DATES[id]));go('map');return}
+  if(DAYDATA[id]&&products(id).length)return viewFieldDay(d);
+  $('#app').innerHTML=`
+  <section class="dayhead"><button class="back" data-go="map">→ خريطة الرحلة</button>
+    <span class="eyebrow">يوم الفرع ${d.id} · ${d.code}</span><h1>${esc(d.t)}</h1><p class="muted">${esc(d.sub)}</p>${onlineNote(d)}</section>
+  <section class="stage"><header><h2>ملفات اليوم</h2></header>${filesBlock(d)}</section>
+  <section class="stage"><header><h2>المنتجات والتحديات قيد الإعداد</h2></header>
+    <p class="muted">اليوم ده هيمشي بنفس قالب يوم العناية بالبشرة: جمع بيانات المنتجات، وبعدها 3 تحديات.</p></section>`;
+}
+
+let dataFilter='all';
+function viewFieldDay(d){
+  const id=d.id,dd=DAYDATA[id],P=products(id),n=dataDone(id),total=P.length,unlocked=dataComplete(id)||S.preview;
+  const qDone=dd.quizzes.filter(q=>S.games[quizKey(id,q.g)]!==undefined).length;
+  $('#app').innerHTML=`
+  <section class="dayhead"><button class="back" data-go="map">→ خريطة الرحلة</button>
+    <span class="eyebrow">يوم الفرع ${id} · ${d.code}</span><h1>${esc(d.t)}</h1>
+    <p class="muted">${esc(dd.intro)}</p>${onlineNote(d)}
+    <div class="progress"><span class="${n===total?'ok':''}">البيانات ${n}/${total}</span><span class="${qDone===3?'ok':''}">التحديات ${qDone}/3</span></div>
+    <details class="ref"><summary>شجرة اليوم وملفاته</summary>
+      <div class="pages" aria-label="صفحات الشجرة">${d.pages.map((p,i)=>`<button data-view="${p}" aria-label="صفحة ${i+1}"><img src="trees/${p}.jpg" alt="" loading="lazy"></button>`).join('')}</div>
+      ${filesBlock(d)}</details>
+  </section>
+
+  <section class="stage" id="data"><header><span class="n">المرحلة الأولى</span><h2>جمع بيانات ${total} منتج</h2></header>
+    <p class="muted">كل كارت فيه صورة منتج. لاقيه في الفرع، واقرا ${dd.mode==='cosmetic'?'الليبل':'العلبة والنشرة'}، واكتب البيانات. لازم تكمّل كل المنتجات عشان التحديات تتفتح.</p>
+    <div class="huntbar"><b>${n}/${total}</b><div class="meter"><i style="width:${total?n/total*100:0}%"></i></div><span class="muted">${n===total?'خلّصت المرحلة الأولى':`فاضل ${total-n}`}</span></div>
+    <div class="filters" role="group" aria-label="فلتر">${[['all','الكل'],['todo','لسه'],['done','اتسلّم']].map(([k,t])=>`<button data-df="${k}" aria-pressed="${dataFilter===k}">${t}</button>`).join('')}</div>
+    <div class="prods">${P.map(([pic,b])=>{
+      const h=S.data[pic]||{},st=h.sent?'done':(h.f?'draft':'todo');
+      if(dataFilter==='todo'&&st==='done')return'';
+      if(dataFilter==='done'&&st!=='done')return'';
+      return `<button class="pc ${st}" data-prod="${id}:${pic}" aria-label="منتج رقم ${pic}">
+        <span class="pimg"><img src="${CONFIG.PIC(pic)}" alt="" loading="lazy" onerror="${imgFallback(pic)}"></span>
+        <span class="pmeta"><b>#${pic}</b><span class="s">${{todo:'لسه',draft:'مسودة',done:'اتسلّم'}[st]}</span></span>
+        ${S.preview?`<span class="pname lt">${esc(b)}</span>`:''}</button>`}).join('')}</div>
+  </section>
+
+  <section class="stage" id="quiz"><header><span class="n">المرحلة التانية</span><h2>التحديات</h2></header>
+    ${unlocked?'':`<div class="locked">${ICON.lock}<span>بتتفتح لما تكمّل بيانات الـ ${total} منتج. فاضل ${total-n}.</span></div>`}
+    <div class="quizzes">${dd.quizzes.map(q=>{const k=quizKey(id,q.g),played=S.games[k]!==undefined;
+      return `<div class="qz ${unlocked?'':'off'}"><h3>${esc(q.t)}</h3><p class="muted">${esc(q.d)}</p>
+        <div class="acts"><button class="btn sm ${unlocked?'orange':''}" data-play="${id}:${q.g}" ${unlocked?'':'disabled'}>${played?'العب تاني':'ابدأ'}</button>
+        ${played?`<span class="chip ok">أعلى نتيجة ${S.games[k]}%</span>`:`<span class="chip">لحد ${CONFIG.XP_QUIZ_MAX} XP</span>`}</div></div>`}).join('')}</div>
+  </section>`;
+}
+
+/* ================= LEADERBOARD ================= */
+let boardTab='people',boardData=null,boardErr='';
+const EXAMPLE={people:[
+  {name:'مثال: سارة العتيبي',branch:'مثال: الرياض',xp:2840},{name:'مثال: فهد القحطاني',branch:'مثال: جدة',xp:2410},
+  {name:'مثال: نورة الشهري',branch:'مثال: الدمام',xp:1980},{name:'مثال: عبدالله الحربي',branch:'مثال: الرياض',xp:1560},
+  {name:'مثال: ريم الدوسري',branch:'مثال: جدة',xp:1190}],
+ branches:[{branch:'مثال: الرياض',xp:4400,count:2},{branch:'مثال: جدة',xp:3600,count:2},{branch:'مثال: الدمام',xp:1980,count:1}]};
+async function loadBoard(){
+  boardErr='';
+  if(!CONFIG.SHEETS_URL){boardData=null;return}
+  try{
+    const u=new URL(CONFIG.SHEETS_URL);u.searchParams.set('action','board');
+    if(S.user)u.searchParams.set('me',S.user.email);if(CONFIG.SHARED_KEY)u.searchParams.set('key',CONFIG.SHARED_KEY);
+    const j=await (await fetch(u.toString())).json();
+    if(!j.ok)throw new Error(j.error||'error');boardData=j;
+  }catch(e){boardErr='مقدرناش نجيب الترتيب دلوقتي. اتأكد من النت وجرّب تاني.'}
+}
+async function viewBoard(){
+  $('#app').innerHTML=`<section class="mapintro"><span class="eyebrow">Leaderboard</span><h1>الترتيب</h1><p class="muted">جاري التحميل…</p></section>`;
+  await flush();await loadBoard();
+  if(!location.hash.startsWith('#board'))return;
+  const demo=!CONFIG.SHEETS_URL;
+  let data=demo?JSON.parse(JSON.stringify(EXAMPLE)):boardData;
+  if(demo&&S.user){
+    data.people.push({name:S.user.name+' (إنت)',branch:S.user.branch,xp:S.xp,me:true});
+    const br=data.branches.find(b=>b.branch===S.user.branch);if(br){br.xp+=S.xp;br.count++}else data.branches.push({branch:S.user.branch,xp:S.xp,count:1});
+  }
+  const people=(data?.people||[]).slice().sort((a,b)=>b.xp-a.xp);
+  const branches=(data?.branches||[]).map(b=>({...b,avg:Math.round(b.xp/Math.max(1,b.count))})).sort((a,b)=>b.avg-a.avg);
+  const rows=boardTab==='people'
+    ? people.map((p,i)=>`<div class="brow ${i<3?'top'+(i+1):''} ${p.me?'me':''}"><span class="rk">${i+1}</span><span class="who"><b>${esc(p.name)}</b><span>${esc(p.branch)} · ${esc(levelOf(p.xp))}</span></span><span class="pts">${p.xp}<small>XP</small></span></div>`).join('')
+    : branches.map((b,i)=>`<div class="brow ${i<3?'top'+(i+1):''} ${S.user&&b.branch===S.user.branch?'me':''}"><span class="rk">${i+1}</span><span class="who"><b>${esc(b.branch)}</b><span>${b.count} متدرب · إجمالي ${b.xp} XP</span></span><span class="pts">${b.avg}<small>متوسط XP</small></span></div>`).join('');
+  $('#app').innerHTML=`
+  <section class="mapintro"><span class="eyebrow">Leaderboard</span><h1>الترتيب</h1>
+    <p class="muted">ترتيب الفروع بمتوسط النقط لكل متدرب، عشان الفرع اللي فيه متدرب واحد ميتظلمش.</p></section>
+  <div style="display:grid;gap:12px;margin-top:12px">
+    ${demo?'<p class="demo-note">وضع تجريبي: الأسماء دي أمثلة توضيحية. لما تربط Google Sheet الترتيب هيبقى حقيقي.</p>':''}
+    ${boardErr?`<div class="fb no"><span>${esc(boardErr)}</span></div>`:''}
+    <div class="tabs" role="tablist"><button role="tab" data-bt="people" aria-selected="${boardTab==='people'}">المتدربين</button><button role="tab" data-bt="branches" aria-selected="${boardTab==='branches'}">الفروع</button></div>
+    <div class="board">${rows||'<div class="brow"><span></span><span class="muted">لسه مفيش نقط مسجلة.</span><span></span></div>'}</div>
+    ${CONFIG.SHEETS_URL?'<button class="btn ghost sm" data-go-refresh style="justify-self:start">تحديث</button>':''}
+  </div>`;
+}
+
+/* ================= OVERLAY ================= */
+let timer;
+function openOv(html){$('#ovroot').innerHTML=`<div class="ov" role="dialog" aria-modal="true"><div class="ov-in">${html}</div></div>`;document.body.style.overflow='hidden';const f=$('#ovroot .x');f&&f.focus()}
+function killOv(){clearInterval(timer);$('#ovroot').onclick=null;$('#ovroot').innerHTML='';document.body.style.overflow=''}
+function closeOv(){killOv();route(true)}
+const ovTop=t=>`<div class="ovtop"><h2>${t}</h2><button class="x" data-close aria-label="اقفل">${ICON.x}</button></div>`;
+function viewer(p){
+  const PAGES=(DAYS.find(d=>d.pages&&d.pages.includes(p))||{pages:[p]}).pages,i=PAGES.indexOf(p);
+  openOv(`${ovTop('شجرة اليوم')}<div class="viewer"><img src="trees/${p}.jpg" alt="صفحة ${i+1} من الشجرة"></div>
+   <div class="vnav"><button class="btn ghost sm" ${i>0?`data-view="${PAGES[i-1]}"`:'disabled'}>السابقة</button><span class="muted">${i+1} / ${PAGES.length}</span><button class="btn ghost sm" ${i<PAGES.length-1?`data-view="${PAGES[i+1]}"`:'disabled'}>التالية</button></div>`);
+}
+
+/* ================= المرحلة الأولى: جمع البيانات ================= */
+function productForm(v){
+  if(needUser())return;
+  const day=+v.split(':')[0],pic=+v.split(':')[1],dd=DAYDATA[day];
+  const P=products(day),idx=P.findIndex(p=>p[0]===pic),b=P[idx][1],x=byPic(day,pic),h=S.data[pic]||{},f=h.f||{};
+  const next=P.slice(idx+1).concat(P.slice(0,idx)).find(([n])=>!(S.data[n]&&S.data[n].sent));
+  const reveal=!h.sent?'':`<div class="fb ${x.ck?(h.correct?'ok':'no'):'info'}"><b>${x.ck?(h.correct?(dd.mode==='cosmetic'?'المكوّن الأساسي صح':'المادة الفعالة صح'):(dd.mode==='cosmetic'?'راجع المكونات':'راجع المادة الفعالة')):'اتسلّم'}</b>
+    <span>المنتج: ${lt(b)}${x.a?' · '+lt(x.a):''}</span><span class="tip">باقي البيانات بيراجعها فريق التدريب.</span></div>`;
+  openOv(`${ovTop('منتج رقم '+pic)}
+   <form class="form" id="pf" novalidate>
+    <div class="bigimg"><img src="${CONFIG.PIC(pic)}" alt="صورة المنتج رقم ${pic}" onerror="${imgFallback(pic)}"></div>
+    ${S.preview?`<p class="note">وضع المعاينة: ${lt(b)}</p>`:''}
+    ${reveal}
+    ${FIELDS[dd.mode].map(([id,lab,dir,ph])=>`<div class="fld"><label for="${id}">${lab}</label>${id==='ha'||id==='hs'
+      ?`<input type="text" id="${id}" dir="${dir}" value="${esc(f[id])}" placeholder="${esc(ph)}">`
+      :`<textarea id="${id}" dir="${dir}" placeholder="${esc(ph)}">${esc(f[id])}</textarea>`}</div>`).join('')}
+    <div id="err"></div>
+    <div class="acts"><button class="btn orange" type="submit">${h.sent?'سلّم التعديل':'سلّم'}</button><button class="btn ghost" type="button" id="draft">احفظ مسودة</button></div>
+   </form>`);
+  const collect=()=>Object.fromEntries(FIELDS[dd.mode].map(([id])=>[id,$('#'+id).value.trim()]));
+  $('#draft').onclick=()=>{S.data[pic]=Object.assign({},S.data[pic],{f:collect()});save();toast('اتحفظت المسودة');closeOv()};
+  $('#pf').onsubmit=e=>{
+    e.preventDefault();
+    const val=collect();
+    if(FIELDS[dd.mode].some(([id])=>!val[id])){$('#err').innerHTML=`<div class="fb no"><span>كمّل الـ 4 خانات: ${FIELDS[dd.mode].map(x=>x[1]).join('، ')}.</span></div>`;return}
+    const wasDone=dataComplete(day);
+    const correct=!!x.ck&&activeOK(x.ck,val.ha);
+    const earned=CONFIG.XP_PER_PRODUCT+(correct||!x.ck?CONFIG.XP_ACTIVE_BONUS:0);
+    const gain=Math.max(0,earned-(h.xp||0));
+    S.data[pic]={f:val,sent:true,correct,xp:Math.max(h.xp||0,earned)};save();
+    addXP(gain,correct?'المادة الفعالة صح':'منتج اتسلّم',{type:'product',day,item:b,score:x.ck?(correct?1:0):'',
+      data:{pic,product:b,active:val.ha,uses:val.hu,strengths:val.hs,dose:val.hd,expected_active:x.a||'',category:(x.cat?x.cat+' / ':'')+(x.sub||'')}});
+    checkDayBadges(day);
+    if(!wasDone&&dataComplete(day)){killOv();route(true);toast('خلّصت المرحلة الأولى! التحديات اتفتحت');setTimeout(()=>{const q=$('#quiz');q&&q.scrollIntoView({behavior:'smooth'})},400);return}
+    if(next&&!h.sent){productForm(`${day}:${next[0]}`);return}
+    productForm(v);
+  };
+}
+
+/* ================= المرحلة التانية: التحديات ================= */
+function finish(day,gid,score,max){
+  const key=quizKey(day,gid),q=DAYDATA[day].quizzes.find(x=>x.g===gid);
+  const pct=Math.round(score/max*100),prev=S.games[key];
+  const gain=Math.round(Math.max(0,pct-(prev||0))*CONFIG.XP_QUIZ_MAX/100);
+  S.games[key]=Math.max(prev||0,pct);save();
+  addXP(gain,q.t,{type:'game',day,item:gid,score:pct});
+  if(pct===100)award('perfect');
+  checkDayBadges(day);
+  openOv(`${ovTop(esc(q.t))}
+   <div class="result"><span class="muted">نتيجتك</span><span class="score">${pct}%</span>
+     <p class="muted">${gain>0?`كسبت ${gain} XP. `:''}${pct>=80?'ممتاز.':'تقدر تلعب تاني وتحسّن نتيجتك. النقط بتتحسب على الفرق بس.'}</p>
+     <div class="acts" style="justify-content:center"><button class="btn orange" data-play="${day}:${gid}">العب تاني</button><button class="btn ghost" data-close>رجوع لليوم</button></div>
+   </div>`);
+}
+function gameMatch(day){
+  const dd=DAYDATA[day];
+  const V=x=>dd.matchField==='sub'?x.sub:x.a;
+  const pool=shuffle(dd.items.filter(x=>dd.matchField==='sub'||x.ck).filter((x,i,arr)=>arr.findIndex(y=>V(y)===V(x))===i)).slice(0,6);
+  const brands=shuffle(pool),acts=shuffle(pool);
+  let sel=null,score=0,matched=0,t=75,miss=0;
+  openOv(`${ovTop('Match Rush')}
+   <div class="hud"><span>الوقت <b id="mt">${t}</b></span><span>نقط <b id="ms">0</b></span><span>غلط <b id="mm">0</b></span></div>
+   <p class="howto">اختار المنتج من العمود الأول، وبعدين ${esc(dd.matchLabel)} بتاعه من التاني.</p>
+   <div class="mgrid">
+     <div class="mcol"><h4>المنتج</h4>${brands.map(x=>`<button class="card mbrand" data-b="${esc(x.b)}"><span class="lt">${esc(x.b)}</span></button>`).join('')}</div>
+     <div class="mcol"><h4>${esc(dd.matchLabel)}</h4>${acts.map(x=>`<button class="card" data-a="${esc(x.b)}"><span class="lt">${esc(V(x))}</span></button>`).join('')}</div>
+   </div>`);
+  let ended=false;
+  const end=()=>{if(ended)return;ended=true;clearInterval(timer);finish(day,'match',Math.max(0,score+Math.round(t/3)),85)};
+  timer=setInterval(()=>{t--;const el=$('#mt');if(el)el.textContent=t;if(t<=0)end()},1000);
+  $('#ovroot').onclick=e=>{
+    const b=e.target.closest('[data-b]'),a=e.target.closest('[data-a]');
+    if(b){document.querySelectorAll('[data-b].sel').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;return}
+    if(a&&sel){
+      if(a.dataset.a===sel.dataset.b){a.classList.add('ok');sel.classList.remove('sel');sel.classList.add('ok');score+=10;matched++;sel=null;if(matched===pool.length)end()}
+      else{a.classList.add('no');setTimeout(()=>a.classList.remove('no'),350);score=Math.max(0,score-3);miss++}
+      $('#ms')&&($('#ms').textContent=score);$('#mm')&&($('#mm').textContent=miss);
+    }
+  };
+}
+function runMC(day,gid,title,items,render){
+  let i=0,score=0;
+  const step=()=>{
+    const it=items[i];
+    openOv(`${ovTop(title)}<div class="pbar"><i style="width:${i/items.length*100}%"></i></div>
+     <div class="hud"><span>سؤال <b>${i+1}</b> من ${items.length}</span><span>صح <b>${score}</b></span></div>${render(it)}<div id="fbx"></div>`);
+    $('#ovroot').onclick=e=>{
+      const o=e.target.closest('[data-o]');
+      if(o&&!o.disabled){
+        const k=+o.dataset.o,right=k===it.ok;if(right)score++;
+        document.querySelectorAll('[data-o]').forEach(b=>{b.disabled=true;if(+b.dataset.o===it.ok)b.classList.add('ok')});
+        if(!right)o.classList.add('no');
+        $('#fbx').innerHTML=`<div class="fb ${right?'ok':'no'}"><b>${right?'صح':'مش ده'}</b><span>${it.why}</span></div>
+          <div style="margin-top:12px"><button class="btn" id="nx">${i<items.length-1?'التالي':'النتيجة'}</button></div>`;
+        $('#nx').focus();
+        $('#nx').onclick=ev=>{ev.stopPropagation();i++;if(i<items.length)step();else finish(day,gid,score,items.length)};
+      }
+    };
+  };
+  step();
+}
+function gameSort(day){
+  const items0=DAYDATA[day].items,subs=[...new Set(items0.map(x=>x.sub))];
+  const items=shuffle(items0).slice(0,10).map(x=>{
+    const same=subs.filter(s=>s!==x.sub&&items0.find(y=>y.sub===s).cat===x.cat);
+    const other=subs.filter(s=>s!==x.sub&&!same.includes(s));
+    const opts=shuffle([x.sub,...shuffle(same).slice(0,2).concat(shuffle(other)).slice(0,3)]);
+    return{b:x.b,opts,ok:opts.indexOf(x.sub),why:`${lt(x.b)}${x.a?' = '+lt(x.a):''}، ومكانه في فرع ${esc(CAT_AR[x.cat]||x.cat)} تحت ${lt(x.sub)}.`};
+  });
+  runMC(day,'sort','Tree Builder',items,it=>`<div class="q"><span class="who">رجّع المنتج ده لمكانه في الشجرة</span><div class="big lt">${esc(it.b)}</div>
+    <div class="opts">${it.opts.map((o,k)=>`<button class="opt" data-o="${k}"><span class="lt">${esc(o)}</span></button>`).join('')}</div></div>`);
+}
+/* Full Prescription / Routine Builder: كل حالة فيها خانات، والمتدرب بيختار لكل خانة، وبعدين يسلّم الحالة كلها */
+function gameBuild(day){
+  const q=DAYDATA[day].build;
+  const cases=q.data.map(c=>({...c,slots:c.slots.map(s=>{const o=shuffle(s.opts.map((t,k)=>({t,ok:k===s.ok})));return{...s,o}})}));
+  const max=cases.reduce((a,c)=>a+c.slots.length,0);
+  let i=0,score=0;
+  const step=()=>{
+    const c=cases[i],pick={};
+    openOv(`${ovTop(esc(q.t))}<div class="pbar"><i style="width:${i/cases.length*100}%"></i></div>
+      <div class="hud"><span>حالة <b>${i+1}</b> من ${cases.length}</span><span>النقط <b>${score}</b> من ${max}</span></div>
+      <div class="q"><span class="who">${esc(c.who)}</span><p class="stem">${esc(c.stem)}</p>
+        <div class="slots">${c.slots.map((s,si)=>`<fieldset class="slot" data-si="${si}"><legend>${esc(s.t)}</legend>
+          <div class="opts">${s.o.map((o,oi)=>`<button type="button" class="opt" data-s="${si}:${oi}">${esc(o.t)}</button>`).join('')}</div><div class="sfb"></div></fieldset>`).join('')}</div>
+        <button class="btn" id="chk" disabled>سلّم ${q.t==='Routine Builder'?'الروتين':'الروشتة'}</button><div id="fbx"></div></div>`);
+    $('#ovroot').onclick=e=>{
+      const o=e.target.closest('[data-s]');if(!o||o.disabled)return;
+      const [si,oi]=o.dataset.s.split(':').map(Number);pick[si]=oi;
+      o.closest('.slot').querySelectorAll('[data-s]').forEach(b=>b.classList.toggle('sel',b===o));
+      $('#chk').disabled=Object.keys(pick).length<c.slots.length;
+    };
+    $('#chk').onclick=ev=>{
+      ev.stopPropagation();let got=0;
+      c.slots.forEach((s,si)=>{
+        const box=document.querySelector(`.slot[data-si="${si}"]`),right=s.o[pick[si]].ok;if(right)got++;
+        box.querySelectorAll('[data-s]').forEach(b=>{b.disabled=true;b.classList.remove('sel');const oi=+b.dataset.s.split(':')[1];if(s.o[oi].ok)b.classList.add('ok');else if(oi===pick[si])b.classList.add('no')});
+        box.querySelector('.sfb').innerHTML=`<span class="${right?'okt':'not'}">${esc(s.why)}</span>`;
+      });
+      score+=got;$('#chk').remove();
+      $('#fbx').innerHTML=`<div class="fb ${got===c.slots.length?'ok':'no'}"><b>${got} من ${c.slots.length} صح</b></div>
+        <div style="margin-top:12px"><button class="btn" id="nx">${i<cases.length-1?'الحالة اللي بعدها':'النتيجة'}</button></div>`;
+      $('#nx').focus();
+      $('#nx').onclick=e2=>{e2.stopPropagation();i++;if(i<cases.length)step();else finish(day,'build',score,max)};
+    };
+  };
+  step();
+}
+function play(v){
+  const [d,g]=v.split(':'),day=+d;
+  if(!dataComplete(day)&&!S.preview){toast('كمّل بيانات المنتجات الأول');return}
+  if(g==='match')gameMatch(day);else if(g==='sort')gameSort(day);else gameBuild(day);
+}
+
+/* ================= ROUTER ================= */
+function route(keepScroll){
+  const h=(location.hash||'#home').slice(1),y=window.scrollY;
+  if(h==='map')viewMap();
+  else if(h==='board')viewBoard();
+  else if(h.startsWith('day-'))viewDay(+h.slice(4));
+  else viewHome();
+  renderXP();
+  if(keepScroll)window.scrollTo(0,y);
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-close]')){closeOv();return}
+  const g=e.target.closest('[data-go]');if(g){e.preventDefault();if($('#ovroot').innerHTML)killOv();go(g.dataset.go);return}
+  if(e.target.closest('[data-go-refresh]')){viewBoard();return}
+  const bt=e.target.closest('[data-bt]');if(bt){boardTab=bt.dataset.bt;viewBoard();return}
+  const df=e.target.closest('[data-df]');if(df){dataFilter=df.dataset.df;route(true);return}
+  const pr=e.target.closest('[data-prod]');if(pr){productForm(pr.dataset.prod);return}
+  const p=e.target.closest('[data-play]');if(p&&!p.disabled){if(needUser())return;clearInterval(timer);play(p.dataset.play);return}
+  const v=e.target.closest('[data-view]');if(v&&!v.disabled){viewer(v.dataset.view);return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#ovroot').innerHTML)closeOv()});
+window.addEventListener('hashchange',()=>{if($('#ovroot').innerHTML)killOv();route();window.scrollTo(0,0)});
+route();flush();
+
+</script>
+
+</body>
+</html>
